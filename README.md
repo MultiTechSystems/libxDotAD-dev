@@ -19,16 +19,17 @@ int main() {
 **Dot devices must not be deployed with software using a different channel plan than the Dot's default plan! This functionality is for development and testing only!**
 
 The name of the repository can be used to determine which device the stack was compiled for and if it's a development or production-ready build:
-  * [libmDot](http://github.com/MultiTechSystems/libmDot/) -> production-ready build for mDot
-  * [libmDot-dev](http://github.com/MultiTechSystems/libmDot-dev/) -> development build for mDot
-  * [libxDot](http://github.com/MultiTechSystems/libxDot/) -> production-ready build for xDot
-  * [libxDot-dev](http://github.com/MultiTechSystems/libxDot-dev/) -> development build for xDot
-  * [libxDotAD](http://github.com/MultiTechSystems/libxDotAD/) -> production-ready build for xDot Advanced
-  * [libxDotAD-dev](http://github.com/MultiTechSystems/libxDotAD-dev/) -> development build for xDot Advanced
+  * [libmDot](http://github.com/MultiTechSystems/libmDot/) -> production-ready build for mDot (MTS_MDOT_F411RE)
+  * [libmDot-dev](http://github.com/MultiTechSystems/libmDot-dev/) -> development build for mDot (MTS_MDOT_F411RE)
+  * [libxDot](http://github.com/MultiTechSystems/libxDot/) -> production-ready build for xDot (XDOT_L151CC)
+  * [libxDot-dev](http://github.com/MultiTechSystems/libxDot-dev/) -> development build for xDot (XDOT_L151CC)
+  * [libxDotAD](http://github.com/MultiTechSystems/libxDotAD/) -> production-ready build for xDot Advanced (XDOT_MAX32670)
+  * [libxDotAD-dev](http://github.com/MultiTechSystems/libxDotAD-dev/) -> development build for xDot Advanced (XDOT_MAX32670)
 
 A changelog for the Dot library can be found [here](https://developer.mbed.org/teams/MultiTech/wiki/Dot-library-change-log).
 
-The Dot library version and the version of mbed-os it was compiled against can both be found in the commit message for that revision of the Dot library. **Building your application with the same version of mbed-os as what was used to build the Dot library is highly recommended!**
+The Dot library version and the version of mbed-os it was compiled against can both be found in the commit message for that revision of the Dot library. 
+**Building your application with the same version of mbed-os as what was used to build the Dot library is highly recommended!**
 
 The [Dot-Examples](https://developer.mbed.org/teams/MultiTech/code/Dot-Examples/) repository demonstrates how to use the Dot library in a custom application.
 
