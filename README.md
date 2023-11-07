@@ -1,3 +1,9 @@
+#### xDot Advanced
+* mbed-os-6.18.0 (use latest until new tag is available)
+* [Arm Compiler](https://developer.arm.com/tools-and-software/embedded/arm-compiler/downloads/version-6) version 6.16 or newer
+* [GNU Arm Embedded Toolchain](https://developer.arm.com/tools-and-software/open-source-software/developer-tools/gnu-toolchain/gnu-rm/downloads) version 10 2021.07 or newer
+  
+
 The Dot library provides a LoRaWan certified stack for LoRa communication using MultiTech mDot and xDot devices. The stack is compatible with mbed 6.
 
 Dot Library versions 4.x.x require a channel plan to be injected into the stack. Channel plans are included with the 4.x.x Dot Library releases. The following code snippet demonstrates how to create a channel plan and inject it into the stack.
