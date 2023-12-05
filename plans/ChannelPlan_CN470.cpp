@@ -610,7 +610,7 @@ uint8_t ChannelPlan_CN470::ValidateAdrConfiguration() {
             status &= 0xFB; // TxPower KO
         }
     }
-    // at least 2 125kHz channels must be enabled
+    // at least 1 125kHz channels must be enabled
     chans_enabled += CountBits(_channelMask[0]);
     chans_enabled += CountBits(_channelMask[1]);
     chans_enabled += CountBits(_channelMask[2]);
@@ -618,9 +618,8 @@ uint8_t ChannelPlan_CN470::ValidateAdrConfiguration() {
     chans_enabled += CountBits(_channelMask[4]);
     chans_enabled += CountBits(_channelMask[5]);
 
-    // Semtech reference (LoRaMac-node) enforces at least 2 channels
-    if (datarate < 4 && chans_enabled < 2) {
-        logWarning("ADR Channel Mask KO - at least 2 125kHz channels must be enabled");
+    if (chans_enabled == 0) {
+        logWarning("ADR Channel Mask KO - at least 1 125kHz channel must be enabled");
         status &= 0xFE; // ChannelMask KO
     }
 
