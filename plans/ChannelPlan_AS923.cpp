@@ -939,13 +939,10 @@ uint8_t ChannelPlan_AS923::HandleMacCommand(uint8_t* payload, uint8_t& index) {
         case SRV_MAC_TX_PARAM_SETUP_REQ: {
             uint8_t eirp_dwell = payload[index++];
 
-            GetSettings()->Session.DownlinkDwelltime = eirp_dwell >> 5 & 0x01;
-            GetSettings()->Session.UplinkDwelltime = eirp_dwell >> 4 & 0x01;
+            GetSettings()->Session.DownlinkDwelltime = (eirp_dwell >> 5) & 0x01;
+            GetSettings()->Session.UplinkDwelltime = (eirp_dwell >> 4) & 0x01;
             //change data rate with if dwell time changes
-            if(GetSettings()->Session.UplinkDwelltime == 0) {
-                _minDatarate = lora::DR_0;
-            } else {
-                _minDatarate = lora::DR_2;
+            if(GetSettings()->Session.UplinkDwelltime == 1) {
                 if(GetSettings()->Session.TxDatarate < lora::DR_2) {
                     GetSettings()->Session.TxDatarate = lora::DR_2;
                     logDebug("Datarate is now DR%d",GetSettings()->Session.TxDatarate);
@@ -976,13 +973,7 @@ uint8_t ChannelPlan_AS923::HandleMacCommand(uint8_t* payload, uint8_t& index) {
 }
 
 void ChannelPlan_AS923::DecrementDatarate() {
-    if(GetSettings()->Session.UplinkDwelltime == 0) {
-        _minDatarate = lora::DR_0;
-    } else {
-        _minDatarate = lora::DR_2;
-    }
-
-    if (GetSettings()->Session.TxDatarate > _minDatarate) {
+    if (GetSettings()->Session.TxDatarate > GetMinDatarate()) {
         GetSettings()->Session.TxDatarate--;
     }
 }

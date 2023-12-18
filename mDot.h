@@ -544,6 +544,30 @@ class mDot {
         void setSessionUplinkDwelltime(uint8_t dwell);
 
         /**
+         * Get the configured default downlink dwell time
+         * returns 0-1
+         */
+        uint8_t getDownlinkDwelltime();
+
+        /**
+         * Set the configured default downlink dwell time
+         * accepts 0-1
+         */
+        void setDownlinkDwelltime(uint8_t dwell);
+
+        /**
+         * Get the configured default uplink dwell time used in the channel plan
+         * returns 0-1
+         */
+        uint8_t getUplinkDwelltime();
+
+        /**
+         * Set the configured default default uplink dwell time used in the channel plan
+         * accepts 0-1
+         */
+        void setUplinkDwelltime(uint8_t dwell);
+
+        /**
          * Set the current downlink dwell time used in the channel plan
          * May be changed by the network server
          * accepts 0-1
