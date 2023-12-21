@@ -2393,7 +2393,7 @@ uint8_t ChannelPlan_GLOBAL::HandleMacCommand(uint8_t* payload, uint8_t& index) {
                 GetSettings()->Session.UplinkDwelltime = (eirp_dwell >> 4) & 0x01;
                 logInfo("HANDLE MAC DWELL UP: %d DN: %d", GetSettings()->Session.UplinkDwelltime, GetSettings()->Session.DownlinkDwelltime);
                 //change data rate with if dwell time changes
-                if(GetSettings()->Session.UplinkDwelltime == 0) {
+                if(GetSettings()->Session.UplinkDwelltime == 1) {
                     if(GetSettings()->Session.TxDatarate < lora::DR_2) {
                         GetSettings()->Session.TxDatarate = lora::DR_2;
                         logDebug("Datarate is now DR%d",GetSettings()->Session.TxDatarate);
