@@ -1475,7 +1475,10 @@ RxWindow ChannelPlan_GLOBAL::GetRxWindow(uint8_t window, int8_t id) {
                         index = 0;
                     }
                 } else {
-                    if (GetSettings()->Session.TxDatarate > GetSettings()->Session.Rx1DatarateOffset) {
+                    if (_plan == IN865 && GetSettings()->Session.Rx1DatarateOffset >= 6) {
+                        index =  GetSettings()->Session.TxDatarate + (GetSettings()->Session.Rx1DatarateOffset == 6 ? 1 : 2);
+                        index = std::min<int>(index, _maxDatarate);
+                    } else if (GetSettings()->Session.TxDatarate > GetSettings()->Session.Rx1DatarateOffset) {
                         index = GetSettings()->Session.TxDatarate - GetSettings()->Session.Rx1DatarateOffset;
                     } else {
                         index = 0;
