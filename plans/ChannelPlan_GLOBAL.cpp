@@ -1558,6 +1558,9 @@ uint8_t ChannelPlan_GLOBAL::HandleRxParamSetup(const uint8_t* payload, uint8_t i
     if (datarate < _minRx2Datarate || datarate > _maxRx2Datarate) {
         logInfo("DR KO");
         status &= 0xFD; // Datarate KO
+    } else if (_plan == IN865 && datarate == DR_6) {
+        logInfo("DR KO");
+        status &= 0xFD; // Datarate KO
     }
 
     if (drOffset < 0 || drOffset > _maxDatarateOffset) {
@@ -1567,7 +1570,12 @@ uint8_t ChannelPlan_GLOBAL::HandleRxParamSetup(const uint8_t* payload, uint8_t i
 
 #if !defined(ENABLE_LORAWAN_OPTIONAL_DATARATES)
     // LCTT expects this Rx1Offset 6 & 7 to be rejected if TxDR is DR5 or greater
-    if (IsPlanAS923() && drOffset >= 6 && ( (GetSettings()->Session.TxDatarate + ((drOffset == 6) ? 1 : 2)) > DR_5)) {
+    if (IsPlanAS923() && drOffset >= 6 && ((GetSettings()->Session.TxDatarate + ((drOffset == 6) ? 1 : 2)) > DR_5)) {
+        logInfo("DR Offset KO");
+        status &= 0xFB; // Rx1DrOffset range KO
+    }
+
+    if (_plan == IN865 && drOffset == 7 && (GetSettings()->Session.TxDatarate == DR_5)) {
         logInfo("DR Offset KO");
         status &= 0xFB; // Rx1DrOffset range KO
     }
