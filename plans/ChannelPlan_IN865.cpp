@@ -327,6 +327,8 @@ RxWindow ChannelPlan_IN865::GetRxWindow(uint8_t window, int8_t id) {
 
             if (GetSettings()->Session.Rx1DatarateOffset >= 6) {
                 index =  GetSettings()->Session.TxDatarate + (GetSettings()->Session.Rx1DatarateOffset == 6 ? 1 : 2);
+                if (index == DR_6)
+                    index = DR_5;
                 index = std::min<int>(index, _maxDatarate);
             } else if (GetSettings()->Session.TxDatarate > GetSettings()->Session.Rx1DatarateOffset) {
                 index = GetSettings()->Session.TxDatarate - GetSettings()->Session.Rx1DatarateOffset;
