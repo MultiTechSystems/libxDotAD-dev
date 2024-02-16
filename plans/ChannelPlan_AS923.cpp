@@ -114,7 +114,9 @@ void ChannelPlan_AS923::Init() {
 
     GetSettings()->Session.UplinkDwelltime = 1;
 
+    _defaultRx2Frequency = AS923_RX2_FREQ + AS923_FREQ_OFFSET_HZ;
     GetSettings()->Session.Rx2Frequency = AS923_RX2_FREQ + AS923_FREQ_OFFSET_HZ;
+    _defaultRx2Datarate = DR_2;
     GetSettings()->Session.Rx2DatarateIndex = DR_2;
 
     GetSettings()->Session.BeaconFrequency = AS923_BEACON_FREQ + AS923_FREQ_OFFSET_HZ;

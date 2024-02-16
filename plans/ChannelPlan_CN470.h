@@ -36,9 +36,9 @@ namespace lora {
     const uint32_t CN470_FREQ_RX2 = 505300000;
 
     const uint32_t CN470_FREQ_MIN = 470000000;
-    const uint32_t CN470_FREQ_MAX = 489300000;
+    const uint32_t CN470_FREQ_MAX = 510000000;
 
-    const uint8_t CN470_MIN_DATARATE = (uint8_t) DR_0;          //!< Minimum transmit datarate for CN470
+    const uint8_t CN470_MIN_DATARATE = (uint8_t) DR_1;          //!< Minimum transmit datarate for CN470
     const uint8_t CN470_MAX_DATARATE = (uint8_t) DR_5;          //!< Maximum transmit datarate for CN470
 
     const uint8_t CN470_MIN_DATARATE_OFFSET = (uint8_t) 0;      //!< Minimum transmit datarate for CN470
@@ -70,6 +70,11 @@ namespace lora {
              * Initialize channels, datarates and duty cycle bands according to current channel plan in settings
              */
             virtual void Init();
+
+            /**
+             * Set LBT time and threshold to defaults
+             */
+            virtual void DefaultLBT();
 
             /**
              * Get the next channel to use to transmit

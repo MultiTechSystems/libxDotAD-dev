@@ -87,6 +87,10 @@ void ChannelPlan_AU915::Init() {
     _freqUStep500k = AU915_500K_FREQ_STEP;
     _freqDBase500k = AU915_500K_DBASE;
     _freqDStep500k = AU915_500K_DSTEP;
+
+    _defaultRx2Frequency = AU915_500K_DBASE;
+    _defaultRx2Datarate = DR_8;
+
     GetSettings()->Session.Rx2Frequency = AU915_500K_DBASE;
 
     _beaconSize = sizeof(BCNPayload);
@@ -811,7 +815,7 @@ void lora::ChannelPlan_AU915::EnableDefaultChannels() {
 
 uint8_t ChannelPlan_AU915::GetNextChannel()
 {
-    bool error = true;
+    bool error = false;
 
     if (GetSettings()->Session.AggregatedTimeOffEnd != 0) {
         return LORA_AGGREGATED_DUTY_CYCLE;

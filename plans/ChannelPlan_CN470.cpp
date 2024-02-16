@@ -21,8 +21,10 @@
 using namespace lora;
 
 const uint8_t ChannelPlan_CN470::CN470_TX_POWERS[] = { 17, 16, 14, 12, 10, 7, 5, 2, 0 };
-const uint8_t ChannelPlan_CN470::CN470_MAX_PAYLOAD_SIZE[] =          { 51, 51, 51, 115, 242, 242, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-const uint8_t ChannelPlan_CN470::CN470_MAX_PAYLOAD_SIZE_REPEATER[] = { 51, 51, 51, 115, 222, 222, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+
+// CN470 regulations limit to 1s time-on-air, this reduces DR0 and DR1
+const uint8_t ChannelPlan_CN470::CN470_MAX_PAYLOAD_SIZE[] =          { 0, 23, 51, 115, 242, 242, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+const uint8_t ChannelPlan_CN470::CN470_MAX_PAYLOAD_SIZE_REPEATER[] = { 0, 23, 51, 115, 222, 222, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 
 ChannelPlan_CN470::ChannelPlan_CN470()
 :
@@ -82,6 +84,9 @@ void ChannelPlan_CN470::Init() {
     _freqDBase500k = CN470_125K_DBASE;
     _freqDStep500k = CN470_125K_DSTEP;
 
+    _defaultRx2Frequency = CN470_FREQ_RX2;
+    _defaultRx2Datarate = DR_0;
+
     GetSettings()->Session.Rx2Frequency = CN470_FREQ_RX2;
 
     GetSettings()->Session.BeaconFrequency = CN470_BEACON_FREQ_BASE;
@@ -135,6 +140,11 @@ void ChannelPlan_CN470::Init() {
 
     SetFrequencySubBand(GetSettings()->Network.FrequencySubBand);
 
+}
+
+void ChannelPlan_CN470::DefaultLBT() {
+    _LBT_TimeUs = 5000;
+    _LBT_Threshold = -80;
 }
 
 uint8_t ChannelPlan_CN470::HandleJoinAccept(const uint8_t* buffer, uint8_t size) {
@@ -715,8 +725,6 @@ uint8_t ChannelPlan_CN470::GetNextChannel()
             }
         }
 
-        _dutyBands[0].PowerMax = 26;
-
         GetRadio()->SetChannel(GetSettings()->Network.TxFrequency);
         return LORA_OK;
     }
@@ -797,9 +805,7 @@ uint8_t lora::ChannelPlan_CN470::GetJoinDatarate() {
     int8_t cnt = GetSettings()->Network.DevNonce % 20;
 
     if (GetSettings()->Test.DisableRandomJoinDatarate == lora::OFF) {
-        if ((cnt % 20) == 0) {
-            dr = lora::DR_0;
-        } else if ((cnt % 16) == 0) {
+        if ((cnt % 16) == 0) {
             dr = lora::DR_1;
         } else if ((cnt % 12) == 0) {
             dr = lora::DR_2;

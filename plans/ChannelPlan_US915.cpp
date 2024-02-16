@@ -83,6 +83,10 @@ void ChannelPlan_US915::Init() {
     _freqUStep500k = US915_500K_FREQ_STEP;
     _freqDBase500k = US915_500K_DBASE;
     _freqDStep500k = US915_500K_DSTEP;
+
+    _defaultRx2Frequency = US915_500K_DBASE;
+    _defaultRx2Datarate = DR_8;
+
     GetSettings()->Session.Rx2Frequency = US915_500K_DBASE;
 
     GetSettings()->Session.BeaconFrequency = US915_BEACON_FREQ_BASE;
