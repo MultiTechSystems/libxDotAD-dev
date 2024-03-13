@@ -1362,13 +1362,16 @@ class mDot {
 
         /**
          *
-         * get/set fota enabled
+         * get/set fota mode
          *
-         * true == FOTA is on
+         * 0 = disabled
+         * 1 = enabled
+         * 4 = passthrough mode
          * set function returns MDOT_OK if success
          */
-        int32_t setFota(const bool& on);
-        bool getFota();
+
+        int32_t setFota(const uint8_t& mode);
+        uint8_t getFota();
 
         /**
          *

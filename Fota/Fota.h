@@ -41,6 +41,10 @@ class Fota {
         bool txPending();
         void enable(bool enabled);
         bool enable();
+
+        void setMode(uint8_t mode);
+        uint8_t getMode();
+
         void fixEventQueue();
         bool ready();
         int32_t timeToStart();
@@ -62,11 +66,19 @@ class Fota {
         #endif
         }
 
+        enum Mode {
+            DISABLED,
+            ENABLED,
+            RESET,
+            STATUS,
+            PASSTHROUGH
+        };
 
     private:
         static void start();
 
         bool _enabled;
+        uint8_t _mode;
         mDot* _dot;
         Thread _send_thread;
         static Fota* _instance;
