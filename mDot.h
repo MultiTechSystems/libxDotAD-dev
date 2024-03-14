@@ -1542,7 +1542,9 @@ class mDot {
          * For the XDOT
          *      in sleep mode, the device can be woken up on GPIO (0-3), UART1_RX, WAKE or by the RTC alarm
          *      in deepsleep mode, the device can only be woken up using the WKUP pin (PA0, WAKE) or by the RTC alarm
-         * @returns Milliseconds slept on success
+         * For the xDot-AD/ES
+         *      in sleep or deepsleep modes, the device can be woken up on GPIO (0-3), UART1_RX, WAKE or by the RTC alarm
+         * @returns Milliseconds slept on success, MDOT_NOT_IDLE if device is busy with transmit/receive processing or FOTA.
          */
         int32_t sleep(const uint32_t& interval, const uint8_t& wakeup_mode = RTC_ALARM, const bool& deepsleep = true);
 
