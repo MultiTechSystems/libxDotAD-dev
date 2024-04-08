@@ -153,10 +153,15 @@ uint8_t ChannelPlan_CN470::HandleJoinAccept(const uint8_t* buffer, uint8_t size)
         // Channel Mask is not supported, ignore if included
     }
 
+    uint8_t fsb = 0;
+
+    if (_txChannel < 96)
+        fsb = (_txChannel / 8);
+
     // Reset state of random channels to enable the last used FSB for the first tx to confirm network settings
     _randomChannel.ChannelState125K(0);
     _randomChannel.ChannelState500K(0);
-    _randomChannel.MarkAllSubbandChannelsUnused(_txFrequencySubBand-1);
+    _randomChannel.MarkAllSubbandChannelsUnused(fsb);
     EnableDefaultChannels();
 
     return LORA_OK;
