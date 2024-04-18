@@ -662,6 +662,12 @@ class mDot {
         int32_t setClass(std::string newClass);
 
         /**
+         * Set the device class A, B or C without changing configuration, revert class after reset
+         *  @returns MDOT_OK if success
+         */
+        int32_t setTempClass(std::string newClass);
+
+        /**
          * Get the device class A, B or C
          *  @returns MDOT_OK if success
          */
@@ -1281,9 +1287,15 @@ class mDot {
 
         /**
          * Get time on air
-         * @returns the amount of time (in ms) it would take to send bytes bytes based on current configuration
+         * @returns the amount of time (in ms) it would take to send bytes based on current configuration
          */
         uint32_t getTimeOnAir(uint8_t bytes);
+
+        /**
+         * Get time on air for last transmitted packet
+         * @returns the amount of time (in ms) it took to send bytes based on current configuration
+         */
+        uint32_t getTimeOnAir();
 
         /**
          * Get min frequency
