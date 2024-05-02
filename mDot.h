@@ -1967,6 +1967,7 @@ class mDot {
         void openRxWindow(uint32_t timeout, uint8_t bandwidth = 0);
         void closeRxWindow();
         void sendContinuous(bool enable=true, uint32_t timeout=0, uint32_t frequency=0, int8_t txpower=-1);
+        void sendContinuous(bool enable, uint32_t timeout, uint32_t frequency, int8_t pa, int8_t hp, int8_t tx);
         int32_t setDeviceId(const std::vector<uint8_t>& id);
 
 #if defined(USE_NVM_CONFIG)

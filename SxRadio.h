@@ -193,6 +193,8 @@ public:
 
     virtual void SetTxContinuousWave( uint32_t freq, int8_t power, uint16_t time ) = 0;
 
+    virtual void SetTxContinuousWave( uint32_t freq, int8_t pa, int8_t hp, int8_t tx, uint16_t time ) = 0;
+
     /*!
      * \brief Checks if the given RF frequency is supported by the hardware
      *
