@@ -21,7 +21,7 @@
 #include "mbed.h"
 #include "ApplicationLayerPackage.h"
 //#define GPS_EPOCH 315964800U
-const uint32_t GPS_EPOCH = 315964800;
+const uint32_t GPS_EPOCH = 315964800 - 18;  // Subtract leap seconds
 
 
 class MulticastGroup : public ApplicationLayerPackage {

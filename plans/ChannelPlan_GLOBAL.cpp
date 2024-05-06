@@ -105,6 +105,12 @@ void ChannelPlan_GLOBAL::Init() {
         case lora::ChannelPlan::AS923_JAPAN2:
             Init_AS923();
             break;
+#if defined(TARGET_MAX32660)
+        case lora::ChannelPlan::KR920:
+            Init_KR920();
+            break;
+#endif
+
 #if defined(TARGET_MTS_MDOT_F411RE) || defined(TARGET_XDOT_MAX32670)
         case lora::ChannelPlan::KR920:
             Init_KR920();
@@ -792,7 +798,7 @@ void ChannelPlan_GLOBAL::DefaultLBT() {
 
 
 void ChannelPlan_GLOBAL::Init_KR920() {
-#if defined(TARGET_MTS_MDOT_F411RE) || defined(TARGET_XDOT_MAX32670)
+#if defined(TARGET_MTS_MDOT_F411RE) || defined(TARGET_XDOT_MAX32670) || defined(TARGET_MAX32660)
     _datarates.clear();
     _channels.clear();
     _dutyBands.clear();
