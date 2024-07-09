@@ -41,6 +41,7 @@ class MulticastGroup : public ApplicationLayerPackage {
         bool switchClassIfPending();
         void switchClass();
         bool isClassSwitchActive() const;
+        void updatePacketTimeToStart(ApplicationMessage& resp);
     private:
         enum MulticastCommands {
             PACKAGE_VERSION,
