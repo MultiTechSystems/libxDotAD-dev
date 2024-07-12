@@ -237,6 +237,7 @@ uint8_t ChannelPlan_CN470::SetTxConfig() {
     }
 
     pwr = std::min < int8_t > (pwr, max_pwr);
+    pwr -= GetSettings()->Network.AntennaGain;
 
     for (int i = RADIO_POWERS_SIZE; i >= 0; i--) {
         if (RADIO_POWERS[i] <= pwr) {
