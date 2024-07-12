@@ -239,7 +239,8 @@ uint8_t ChannelPlan_CN470::SetTxConfig() {
     pwr = std::min < int8_t > (pwr, max_pwr);
     pwr -= GetSettings()->Network.AntennaGain;
 
-    for (int i = RADIO_POWERS_SIZE; i >= 0; i--) {
+    // CN470 is 1-22
+    for (int i = RADIO_POWERS_SIZE+1; i >= 1; i--) {
         if (RADIO_POWERS[i] <= pwr) {
             pwr = i;
             break;
@@ -270,9 +271,12 @@ uint8_t ChannelPlan_CN470::SetTxConfig() {
         crc = true;
     }
 
-    GetRadio()->SetTxConfig(modem, pwr, fdev, bw, sf, cr, pl, false, crc, false, 0, iq, 3e3);
-
     logInfo("TX PWR: %u DR: %u SF: %u BW: %u CR: %u PL: %u CRC: %d IQ: %d", pwr, txDr.Index, sf, bw, cr, pl, crc, iq);
+
+    // CN470 is 1-22 dBm but SX table is 0-21 where 21 == 22 dBm
+    pwr -= 1;
+    
+    GetRadio()->SetTxConfig(modem, pwr, fdev, bw, sf, cr, pl, false, crc, false, 0, iq, 3e3);
 
     return LORA_OK;
 }
