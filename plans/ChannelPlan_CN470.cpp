@@ -240,7 +240,7 @@ uint8_t ChannelPlan_CN470::SetTxConfig() {
     pwr -= GetSettings()->Network.AntennaGain;
 
     // CN470 is 1-22
-    for (int i = RADIO_POWERS_SIZE+1; i >= 1; i--) {
+    for (int i = RADIO_POWERS_SIZE; i >= 1; i--) {
         if (RADIO_POWERS[i] <= pwr) {
             pwr = i;
             break;
