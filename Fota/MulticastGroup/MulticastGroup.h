@@ -22,6 +22,7 @@
 #include "ApplicationLayerPackage.h"
 //#define GPS_EPOCH 315964800U
 const uint32_t GPS_EPOCH = 315964800 - 18;  // Subtract leap seconds
+#define MC_MULTICAST_SESSIONS 4
 
 
 class MulticastGroup : public ApplicationLayerPackage {
@@ -42,6 +43,7 @@ class MulticastGroup : public ApplicationLayerPackage {
         void switchClass();
         bool isClassSwitchActive() const;
         void updatePacketTimeToStart(ApplicationMessage& resp);
+        
     private:
         enum MulticastCommands {
             PACKAGE_VERSION,
@@ -82,7 +84,7 @@ class MulticastGroup : public ApplicationLayerPackage {
 
         // Thread _event_thread;
         // EventQueue _switch_class_queue;
-        mcgroup _mcGroup[MULTICAST_SESSIONS];
+        mcgroup _mcGroup[MC_MULTICAST_SESSIONS];
         char _org_class;
         Mutex _class_switch_lock;
 
