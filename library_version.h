@@ -1,6 +1,6 @@
 #ifndef __LIBRARY_VERSION_H__ 
 #define __LIBRARY_VERSION_H__ 
-#define MDOT_VERSION "4.2.20-14-gf21bf1d" 
+#define MDOT_VERSION "4.2.20-15-g1bd8c3c" 
 #define LW_VERSION "1.0.4" 
 #define RP_VERSION "1.0.3" 
 #endif 
