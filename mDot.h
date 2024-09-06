@@ -668,10 +668,16 @@ class mDot {
         int32_t setTempClass(std::string newClass);
 
         /**
-         * Get the device class A, B or C
+         * Get the device current operating class A, B or C
          *  @returns MDOT_OK if success
          */
         std::string getClass();
+
+        /**
+         * Get the device configured default class A, B or C
+         *  @returns MDOT_OK if success
+         */
+        std::string getConfigClass();
 
         /**
          * Get the max packet length with current settings
