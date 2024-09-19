@@ -272,16 +272,9 @@ uint8_t ChannelPlan_AU915::SetTxConfig() {
     if (pwr + GetSettings()->Network.AntennaGain >= max_pwr + 6 && GetSettings()->Network.AntennaGain > 6) {
         pwr -= (GetSettings()->Network.AntennaGain - 6);
     }
+    
+    pwr = getTxPowerIndex(pwr);
 
-    for (int i = RADIO_POWERS_SIZE; i >= 0; i--) {
-        if (RADIO_POWERS[i] <= pwr) {
-            pwr = i;
-            break;
-        }
-        if (i == 0) {
-            pwr = i;
-        }
-    }
 
     logInfo("Session pwr: %d ant: %d max: %d", GetSettings()->Session.TxPower, GetSettings()->Network.AntennaGain, max_pwr);
     logInfo("Radio Power index: %d output: %d total: %d", pwr, RADIO_POWERS[pwr], RADIO_POWERS[pwr] + GetSettings()->Network.AntennaGain);
@@ -1021,14 +1014,10 @@ uint8_t ChannelPlan_AU915::HandleMacCommand(uint8_t* payload, uint8_t& index) {
             }
 
             GetSettings()->Session.Max_EIRP = MAX_ERP_VALUES[(eirp_dwell & 0x0F)];
-            logDebug("buffer index %d", GetSettings()->Session.CommandBufferIndex);
 
-            if (GetSettings()->Session.TxPower > GetSettings()->Session.Max_EIRP) {
-                GetSettings()->Session.TxPower = GetSettings()->Session.Max_EIRP;
-            }
+            GetSettings()->Session.TxPower = GetSettings()->Session.Max_EIRP;
 
             if (GetSettings()->Session.CommandBufferIndex < std::min<int>(GetMaxPayloadSize(), COMMANDS_BUFFER_SIZE)) {
-                logDebug("Add tx param setup mac cmd to buffer");
                 GetSettings()->Session.CommandBuffer[GetSettings()->Session.CommandBufferIndex++] = MOTE_MAC_TX_PARAM_SETUP_ANS;
             }
 

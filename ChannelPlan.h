@@ -26,7 +26,7 @@
 #if USE_SX1262
 #define RADIO_POWERS_SIZE 22
 #else
-#define RADIO_POWERS_SIZE 20
+#define RADIO_POWERS_SIZE 21
 #endif
 
 using namespace std::chrono;
@@ -263,6 +263,8 @@ namespace lora {
              * @return LORA_OK
              */
             virtual uint8_t SetTxDatarate(uint8_t index);
+
+            virtual uint8_t getTxPowerIndex(int8_t power);
 
             /**
              * Set the datarate offset used for first receive window

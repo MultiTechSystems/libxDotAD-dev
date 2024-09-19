@@ -273,16 +273,7 @@ uint8_t ChannelPlan_US915::SetTxConfig() {
     }
 
     pwr = std::min < int8_t > (pwr, max_pwr);
-
-    for (int i = RADIO_POWERS_SIZE; i >= 0; i--) {
-        if (RADIO_POWERS[i] <= pwr) {
-            pwr = i;
-            break;
-        }
-        if (i == 0) {
-            pwr = i;
-        }
-    }
+    pwr = getTxPowerIndex(pwr);
 
     logInfo("Session pwr: %d ant: %d max: %d", GetSettings()->Session.TxPower, GetSettings()->Network.AntennaGain, max_pwr);
     logInfo("Radio Power index: %d output: %d total: %d", pwr, RADIO_POWERS[pwr], RADIO_POWERS[pwr] + GetSettings()->Network.AntennaGain);

@@ -239,16 +239,12 @@ uint8_t ChannelPlan_CN470::SetTxConfig() {
     pwr = std::min < int8_t > (pwr, max_pwr);
     pwr -= GetSettings()->Network.AntennaGain;
 
+    pwr = getTxPowerIndex(pwr);
+
     // CN470 is 1-22
-    for (int i = RADIO_POWERS_SIZE; i >= 1; i--) {
-        if (RADIO_POWERS[i] <= pwr) {
-            pwr = i;
-            break;
-        }
-        if (i == 0) {
-            pwr = i;
-        }
-    }
+    if (pwr == 0)
+        pwr = 1;
+    
 
     logInfo("Session pwr: %d ant: %d max: %d", GetSettings()->Session.TxPower, GetSettings()->Network.AntennaGain, max_pwr);
     logInfo("Radio Power index: %d output: %d total: %d", pwr, RADIO_POWERS[pwr], RADIO_POWERS[pwr] + GetSettings()->Network.AntennaGain);
@@ -373,6 +369,7 @@ RxWindow ChannelPlan_CN470::GetRxWindow(uint8_t window, int8_t id) {
 
             if (GetSettings()->Session.TxDatarate > GetSettings()->Session.Rx1DatarateOffset) {
                 index = GetSettings()->Session.TxDatarate - GetSettings()->Session.Rx1DatarateOffset;
+                index = std::max<uint8_t>(0, index);
             } else {
                 index = 0;
             }
@@ -571,7 +568,7 @@ uint8_t ChannelPlan_CN470::HandleAdrCommand(const uint8_t* payload, uint8_t inde
         status &= 0xFD; // Datarate KO
     }
     //
-    // Remark MaxTxPower = 0 and MinTxPower = 14
+    // Remark MaxTxPower = 0 and MinTxPower = 8
     //
     if (power != 0xF && power > 8) {
         status &= 0xFB; // TxPower KO

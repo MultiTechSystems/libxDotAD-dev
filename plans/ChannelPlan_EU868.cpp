@@ -284,16 +284,7 @@ uint8_t ChannelPlan_EU868::SetTxConfig() {
 
     pwr = std::min < int8_t > (GetSettings()->Session.TxPower, max_pwr);
     pwr -= GetSettings()->Network.AntennaGain;
-
-    for (int i = RADIO_POWERS_SIZE; i >= 0; i--) {
-        if (RADIO_POWERS[i] <= pwr) {
-            pwr = i;
-            break;
-        }
-        if (i == 0) {
-            pwr = i;
-        }
-    }
+    pwr = getTxPowerIndex(pwr);
 
     logInfo("Session pwr: %d ant: %d max: %d", GetSettings()->Session.TxPower, GetSettings()->Network.AntennaGain, max_pwr);
     logInfo("Radio Power index: %d output: %d total: %d", pwr, RADIO_POWERS[pwr], RADIO_POWERS[pwr] + GetSettings()->Network.AntennaGain);
