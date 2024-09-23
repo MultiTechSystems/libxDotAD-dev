@@ -1005,8 +1005,12 @@ uint8_t ChannelPlan_AU915::HandleMacCommand(uint8_t* payload, uint8_t& index) {
 
             GetSettings()->Session.DownlinkDwelltime = (eirp_dwell >> 5) & 0x01;
             GetSettings()->Session.UplinkDwelltime = (eirp_dwell >> 4) & 0x01;
+            
             //change data rate with if dwell time changes
-            if(GetSettings()->Session.UplinkDwelltime == 1) {
+            if(GetSettings()->Session.UplinkDwelltime == 0) {
+                _minDatarate = lora::DR_0;
+            } else {
+                _minDatarate = lora::DR_2;
                 if(GetSettings()->Session.TxDatarate < lora::DR_2) {
                     GetSettings()->Session.TxDatarate = lora::DR_2;
                     logDebug("Datarate is now DR%d",GetSettings()->Session.TxDatarate);
