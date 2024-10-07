@@ -323,7 +323,7 @@ namespace lora {
             /**
              * Call before setting device in sleep mode to place radio in sleep
              */
-            void Sleep();
+            void Sleep(bool warm_start = false);
 
         protected:
 #if defined(TARGET_XDOT_MAX32670)
