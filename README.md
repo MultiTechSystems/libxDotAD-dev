@@ -43,7 +43,6 @@ The [mDot](https://developer.mbed.org/platforms/MTS-mDot-F411/) and [xDot](https
 
 Additional information can be found in [Multitech Systems Developer Docs](https://multitechsystems.github.io/).
 
-
 # FOTA Example
 Full FOTA support is only available on xDot with external flash.  See [Enabling External Storage on xDot](https://multitechsystems.github.io/dot-development-xdot#enabling-external-storage-on-xdot) for details.  
 
