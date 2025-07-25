@@ -1,5 +1,5 @@
 #### xDot Advanced
-* mbed-os-6.18.0 (use latest until new tag is available)
+* mbed-os-6.18.0 (use latest commit on master, 6.18.0 was never tagged/released)
 * [Arm Compiler](https://developer.arm.com/tools-and-software/embedded/arm-compiler/downloads/version-6) version 6.16 or newer
 * [GNU Arm Embedded Toolchain](https://developer.arm.com/tools-and-software/open-source-software/developer-tools/gnu-toolchain/gnu-rm/downloads) version 10 2021.07 or newer
   
