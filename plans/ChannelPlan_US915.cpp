@@ -21,8 +21,11 @@
 using namespace lora;
 
 const uint8_t ChannelPlan_US915::US915_TX_POWERS[] = { 30, 28, 26, 24, 22, 20, 18, 16, 14, 12, 10, 8, 6, 4, 2, 0 };
-const uint8_t ChannelPlan_US915::US915_MAX_PAYLOAD_SIZE[] =          { 11, 53, 125, 242, 242, 0, 0, 0, 53, 129, 242, 242, 242, 242, 0, 0 };
-const uint8_t ChannelPlan_US915::US915_MAX_PAYLOAD_SIZE_REPEATER[] = { 11, 53, 125, 222, 222, 0, 0, 0, 33, 109, 222, 222, 222, 222, 0, 0 };
+const uint8_t ChannelPlan_US915::US915_MAX_PAYLOAD_SIZE[] =          { 11, 53, 125, 242, 242, 0, 0, 242, 242, 0, 0, 0, 0, 0, 0, 0 };
+const uint8_t ChannelPlan_US915::US915_MAX_PAYLOAD_SIZE_REPEATER[] = { 11, 53, 125, 222, 222, 0, 0, 222, 222, 0, 0, 0, 0, 0, 0, 0 };
+
+const uint8_t ChannelPlan_US915::US915_MAX_DOWNLINK_PAYLOAD_SIZE[] =          { 242, 0, 0, 0, 0, 0, 0, 0, 53, 129, 242, 242, 242, 242, 242, 0 };
+const uint8_t ChannelPlan_US915::US915_MAX_DOWNLINK_PAYLOAD_SIZE_REPEATER[] = { 222, 0, 0, 0, 0, 0, 0, 0, 33, 109, 222, 222, 222, 222, 222, 0 };
 
 ChannelPlan_US915::ChannelPlan_US915()
 :
@@ -73,6 +76,9 @@ void ChannelPlan_US915::Init() {
     TX_POWERS = US915_TX_POWERS;
     MAX_PAYLOAD_SIZE = US915_MAX_PAYLOAD_SIZE;
     MAX_PAYLOAD_SIZE_REPEATER = US915_MAX_PAYLOAD_SIZE_REPEATER;
+
+    MAX_DOWNLINK_PAYLOAD_SIZE = US915_MAX_DOWNLINK_PAYLOAD_SIZE;
+    MAX_DOWNLINK_PAYLOAD_SIZE_REPEATER = US915_MAX_DOWNLINK_PAYLOAD_SIZE_REPEATER;
 
     band.FrequencyMin = US915_FREQ_MIN;
     band.FrequencyMax = US915_FREQ_MAX;
@@ -130,7 +136,19 @@ void ChannelPlan_US915::Init() {
     dr.SpreadingFactor = SF_INVALID;
     AddDatarate(-1, dr), dr.Index++;
     AddDatarate(-1, dr), dr.Index++;
+
+    dr.SpreadingFactor = SF_6;
+    dr.Bandwidth = BW_125;
     AddDatarate(-1, dr), dr.Index++;
+
+    dr.SpreadingFactor = SF_5;
+    dr.Bandwidth = BW_125;
+    AddDatarate(-1, dr), dr.Index++;
+
+    // Skip DR9-15 RFU
+    dr.SpreadingFactor = SF_INVALID;
+    AddDatarate(-1, dr), dr.Index++;
+    
 
     band.PowerMax = 30;
 
@@ -140,17 +158,30 @@ void ChannelPlan_US915::Init() {
 
     GetSettings()->Session.Rx2DatarateIndex = DR_8;
 
-    // Add DR8-13
-    dr.SpreadingFactor = SF_12;
-    while (dr.SpreadingFactor >= SF_7) {
-        AddDatarate(-1, dr);
-        dr.SpreadingFactor--;
+    // Add downlink datarates
+    dr.SpreadingFactor = SF_5;
+    dr.Bandwidth = BW_500;
+    dr.Index = 0;
+    AddDlDatarate(-1, dr), dr.Index++;;
+
+    // Skip DR1-7 RFU
+    dr.SpreadingFactor = SF_INVALID;
+    for (int i = 1; i < 8; i++) {
+        AddDlDatarate(-1, dr);
         dr.Index++;
     }
 
-    // Skip DR14-15 RFU
+    // Add DR8-14
+    dr.SpreadingFactor = SF_12;
+    while (dr.SpreadingFactor >= SF_6) {
+        AddDlDatarate(-1, dr);
+        dr.SpreadingFactor--;
+        dr.Index++;
+    }
+       
+    // Skip DR15 RFU
     dr.SpreadingFactor = SF_INVALID;
-    AddDatarate(-1, dr), AddDatarate(-1, dr);
+    AddDlDatarate(-1, dr), dr.Index++;
 
     GetSettings()->Session.TxDatarate = DR_0;
     GetSettings()->Session.TxPower = GetSettings()->Network.TxPower;
@@ -226,7 +257,7 @@ uint8_t ChannelPlan_US915::GetMinDatarate() {
 
 uint8_t ChannelPlan_US915::GetMaxDatarate() {
     if (GetSettings()->Network.Mode == lora::PEER_TO_PEER)
-        return 13;
+        return 14;
     else
         return _maxDatarate;
 }
@@ -249,7 +280,7 @@ uint8_t ChannelPlan_US915::SetRx2DatarateIndex(uint8_t index) {
 uint8_t ChannelPlan_US915::SetTxConfig() {
 
     uint8_t band = GetDutyBand(GetChannel(_txChannel).Frequency);
-    Datarate txDr = GetDatarate(GetSettings()->Session.TxDatarate);
+    Datarate txDr = P2PEnabled() ? GetDlDatarate(GetSettings()->Session.TxDatarate) : GetDatarate(GetSettings()->Session.TxDatarate);
     int8_t max_pwr = _dutyBands[band].PowerMax;
     uint8_t chans_enabled = 0;
 
@@ -328,12 +359,12 @@ Channel ChannelPlan_US915::GetChannel(int8_t index) {
         if (index < 64) {
             chan.Index = index;
             chan.DrRange.Fields.Min = _minDatarate;
-            chan.DrRange.Fields.Max = _maxDatarate - 1;
+            chan.DrRange.Fields.Max = _maxDatarate;
             chan.Frequency = _freqUBase125k + (_freqUStep125k * index);
         } else if (index < 72) {
             chan.Index = index;
-            chan.DrRange.Fields.Min = _maxDatarate;
-            chan.DrRange.Fields.Max = _maxDatarate;
+            chan.DrRange.Fields.Min = DR_4;
+            chan.DrRange.Fields.Max = DR_4;
             chan.Frequency = _freqUBase500k + (_freqUStep500k * (index - 64));
         }
     }
@@ -369,7 +400,7 @@ void ChannelPlan_US915::LogRxWindow(uint8_t wnd) {
 
 #if defined(MTS_DEBUG)
     RxWindow rxw = GetRxWindow(wnd);
-    Datarate rxDr = GetDatarate(rxw.DatarateIndex);
+    Datarate rxDr = GetDlDatarate(rxw.DatarateIndex);
     uint8_t bw = rxDr.Bandwidth;
     uint8_t sf = rxDr.SpreadingFactor;
     uint8_t cr = rxDr.Coderate;
@@ -392,6 +423,9 @@ RxWindow ChannelPlan_US915::GetRxWindow(uint8_t window, int8_t id) {
         rxw.Frequency = GetSettings()->Network.TxFrequency;
         index = GetSettings()->Session.TxDatarate;
     } else {
+        uint8_t tdr = GetSettings()->Session.TxDatarate;
+        uint8_t offset = GetSettings()->Session.Rx1DatarateOffset;
+
         switch (window) {
         case RX_1:
             if (_txChannel < _numChans125k) {
@@ -402,18 +436,30 @@ RxWindow ChannelPlan_US915::GetRxWindow(uint8_t window, int8_t id) {
             } else
                 rxw.Frequency = _freqDBase500k + (_txChannel - _numChans125k) * _freqDStep500k;
 
-            if (GetSettings()->Session.TxDatarate <= DR_4) {
-                index = GetSettings()->Session.TxDatarate + 10 - GetSettings()->Session.Rx1DatarateOffset;
+            if (tdr <= DR_4) {
+                index = tdr + 10 - offset;
 
                 if (index < DR_8)
                     index = DR_8;
-                if (index > DR_13)
+                if (index > DR_13) // DR_4 is 13 at offset 0 and 1
                     index = DR_13;
-            } else if (GetSettings()->Session.TxDatarate >= DR_8) {
-                index = GetSettings()->Session.TxDatarate - GetSettings()->Session.Rx1DatarateOffset;
+            } else if (tdr <= DR_8) {
+                if (tdr == DR_8) {
+                    if (offset == 0) {
+                        index = DR_0;
+                    } else {
+                        index = 15 - offset;
+                    }
+                } else if (tdr == DR_7) {
+                    index = DR_14 - offset;
+                }
+                // DR_5 and DR_6 are LR-FHSS and not supported
+            } else if (tdr > DR_8) {
+                // This case should not happen, P2P does not open RX1
+                index = tdr - offset;
                 if (index < DR_8)
                     index = DR_8;
-            }
+            }   
 
             break;
 
@@ -483,7 +529,7 @@ uint8_t ChannelPlan_US915::HandleRxParamSetup(const uint8_t* payload, uint8_t in
         status &= 0xFE; // Channel frequency KO
     }
 
-    if (datarate < _minRx2Datarate || datarate > _maxRx2Datarate) {
+    if (datarate != 0 && (datarate < _minRx2Datarate || datarate > _maxRx2Datarate)) {
         logInfo("DR KO");
         status &= 0xFD; // Datarate KO
     }
@@ -542,7 +588,7 @@ uint8_t ChannelPlan_US915::HandlePingSlotChannelReq(const uint8_t* payload, uint
         status &= 0xFE; // Channel frequency KO
     }
 
-    if (datarate < _minRx2Datarate || datarate > _maxRx2Datarate) {
+    if (datarate != 0 && (datarate < _minRx2Datarate || datarate > _maxRx2Datarate)) {
         logInfo("DR KO");
         status &= 0xFD; // Datarate KO
     }
@@ -698,6 +744,25 @@ uint8_t ChannelPlan_US915::HandleAdrCommand(const uint8_t* payload, uint8_t inde
     return LORA_OK;
 }
 
+void ChannelPlan_US915::DecrementDatarate() {
+    if (GetSettings()->Session.TxDatarate > _minDatarate)
+        GetSettings()->Session.TxDatarate--;
+
+    // Skip DR 5 and 6 (LR-FHSS), ADR also skips DR4 in backoff
+    if (GetSettings()->Session.TxDatarate == DR_6)
+        GetSettings()->Session.TxDatarate = DR_3;
+}
+
+void ChannelPlan_US915::IncrementDatarate() {
+    if (GetSettings()->Session.TxDatarate < _maxDatarate)
+        GetSettings()->Session.TxDatarate++;
+
+    // Skip DR 5 and 6 (LR-FHSS)
+    if (GetSettings()->Session.TxDatarate == DR_4)
+        GetSettings()->Session.TxDatarate = DR_7;
+}
+
+
 uint8_t ChannelPlan_US915::ValidateAdrConfiguration() {
     uint8_t status = 0x07;
     uint8_t chans_enabled = 0;
@@ -705,7 +770,7 @@ uint8_t ChannelPlan_US915::ValidateAdrConfiguration() {
     uint8_t power = GetSettings()->Session.TxPower;
 
     if (GetSettings()->Network.ADREnabled) {
-        if (datarate > _maxDatarate) {
+        if (datarate > _maxDatarate || datarate == DR_5 || datarate == DR_6) {
             logWarning("ADR Datarate KO - outside allowed range");
             status &= 0xFD; // Datarate KO
         }
@@ -719,8 +784,9 @@ uint8_t ChannelPlan_US915::ValidateAdrConfiguration() {
     chans_enabled += CountBits(_channelMask[1]);
     chans_enabled += CountBits(_channelMask[2]);
     chans_enabled += CountBits(_channelMask[3]);
+
     // Semtech reference (LoRaMac-node) enforces at least 2 channels
-    if (datarate < 4 && chans_enabled < 2) {
+    if (datarate != 4 && chans_enabled < 2) {
         logWarning("ADR Channel Mask KO - at least 2 125kHz channels must be enabled");
         status &= 0xFE; // ChannelMask KO
     }

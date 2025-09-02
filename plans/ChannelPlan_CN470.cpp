@@ -338,7 +338,7 @@ uint8_t ChannelPlan_CN470::SetFrequencySubBand(uint8_t sub_band) {
 
 void ChannelPlan_CN470::LogRxWindow(uint8_t wnd) {
 
-#if 1 // defined(MTS_DEBUG)
+#if defined(MTS_DEBUG)
     RxWindow rxw = GetRxWindow(wnd);
     Datarate rxDr = GetDatarate(rxw.DatarateIndex);
     uint8_t bw = rxDr.Bandwidth;

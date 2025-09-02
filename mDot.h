@@ -395,6 +395,7 @@ class mDot {
          */
         bool hasMacCommands();
 
+        uint32_t getLastRecvDuration();
 
         uint8_t setChannelPlan(lora::ChannelPlan* plan);
 

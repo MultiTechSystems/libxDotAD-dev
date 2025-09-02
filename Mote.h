@@ -205,6 +205,8 @@ namespace lora {
              */
             uint8_t Send(uint8_t port, const uint8_t* payload, uint8_t size);
 
+            uint32_t GetLastRecvDuration();
+
             /**
              * Configure the channel plan
              * @param plan pointer to ChannelPlan object

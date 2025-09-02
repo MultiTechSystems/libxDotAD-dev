@@ -234,6 +234,7 @@ namespace lora {
 
             virtual uint8_t GetMaxDatarate();
 
+
             /**
              * Check if this packet is a beacon and if so extract parameters needed
              * @param payload of potential beacon
@@ -264,6 +265,9 @@ namespace lora {
              */
             virtual void DecrementDatarate();
 
+            
+            virtual void IncrementDatarate();
+
             /**
              * Set LBT time and threshold to defaults
              */
@@ -277,6 +281,8 @@ namespace lora {
             static const uint8_t US915_TX_POWERS[16];                   //!< List of available tx powers
             static const uint8_t US915_MAX_PAYLOAD_SIZE[];              //!< List of max payload sizes for each datarate
             static const uint8_t US915_MAX_PAYLOAD_SIZE_REPEATER[];     //!< List of repeater compatible max payload sizes for each datarate
+            static const uint8_t US915_MAX_DOWNLINK_PAYLOAD_SIZE[];              //!< List of max payload sizes for each datarate
+            static const uint8_t US915_MAX_DOWNLINK_PAYLOAD_SIZE_REPEATER[];     //!< List of repeater compatible max payload sizes for each datarate
 
             typedef struct __attribute__((packed)) {
                 uint8_t RFU1[5];
@@ -292,6 +298,8 @@ namespace lora {
             static const uint8_t AU915_MAX_PAYLOAD_SIZE_400[];          //!< List of max payload sizes for each datarate
             static const uint8_t AU915_MAX_PAYLOAD_SIZE_REPEATER[];     //!< List of repeater compatible max payload sizes for each datarate
             static const uint8_t AU915_MAX_PAYLOAD_SIZE_REPEATER_400[]; //!< List of repeater compatible max payload sizes for each datarate
+            static const uint8_t AU915_MAX_DOWNLINK_PAYLOAD_SIZE[];              //!< List of max payload sizes for each datarate
+            static const uint8_t AU915_MAX_DOWNLINK_PAYLOAD_SIZE_REPEATER[];     //!< List of repeater compatible max payload sizes for each datarate
             static const uint8_t AU915_MAX_ERP_VALUES[];                      //!< Lookup table for Max EIRP (dBm) codes
 
             typedef struct __attribute__((packed)) {

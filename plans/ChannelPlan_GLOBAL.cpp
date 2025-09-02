@@ -21,36 +21,45 @@
 using namespace lora;
 
 const uint8_t ChannelPlan_GLOBAL::US915_TX_POWERS[] = { 30, 28, 26, 24, 22, 20, 18, 16, 14, 12, 10, 8, 6, 4, 2, 0 };
-const uint8_t ChannelPlan_GLOBAL::US915_MAX_PAYLOAD_SIZE[] =          { 11, 53, 125, 242, 242, 0, 0, 0, 53, 129, 242, 242, 242, 242, 0, 0 };
-const uint8_t ChannelPlan_GLOBAL::US915_MAX_PAYLOAD_SIZE_REPEATER[] = { 11, 53, 125, 222, 222, 0, 0, 0, 33, 109, 222, 222, 222, 222, 0, 0 };
+
+const uint8_t ChannelPlan_GLOBAL::US915_MAX_PAYLOAD_SIZE[] =          { 11, 53, 125, 242, 242, 0, 0, 242, 242, 0, 0, 0, 0, 0, 0, 0 };
+const uint8_t ChannelPlan_GLOBAL::US915_MAX_PAYLOAD_SIZE_REPEATER[] = { 11, 53, 125, 222, 222, 0, 0, 222, 222, 0, 0, 0, 0, 0, 0, 0 };
+
+const uint8_t ChannelPlan_GLOBAL::US915_MAX_DOWNLINK_PAYLOAD_SIZE[] =          { 242, 0, 0, 0, 0, 0, 0, 0, 53, 129, 242, 242, 242, 242, 242, 0 };
+const uint8_t ChannelPlan_GLOBAL::US915_MAX_DOWNLINK_PAYLOAD_SIZE_REPEATER[] = { 222, 0, 0, 0, 0, 0, 0, 0, 33, 109, 222, 222, 222, 222, 222, 0 };
+
 
 const uint8_t ChannelPlan_GLOBAL::RU864_TX_POWERS[] = { 16, 14, 12, 9, 8, 6, 4, 2 };
-const uint8_t ChannelPlan_GLOBAL::RU864_MAX_PAYLOAD_SIZE[] = { 51, 51, 51, 115, 242, 242, 242, 242, 0, 0, 0, 0, 0, 0, 0, 0 };
-const uint8_t ChannelPlan_GLOBAL::RU864_MAX_PAYLOAD_SIZE_REPEATER[] = { 51, 51, 51, 115, 222, 222, 222, 222, 0, 0, 0, 0, 0, 0, 0, 0 };
+const uint8_t ChannelPlan_GLOBAL::RU864_MAX_PAYLOAD_SIZE[] = { 51, 51, 51, 115, 242, 242, 242, 242, 0, 0, 0, 0, 242, 242, 0, 0 };
+const uint8_t ChannelPlan_GLOBAL::RU864_MAX_PAYLOAD_SIZE_REPEATER[] = { 51, 51, 51, 115, 222, 222, 222, 222, 0, 0, 0, 0, 222, 222, 0, 0 };
 
 const uint8_t ChannelPlan_GLOBAL::KR920_TX_POWERS[] = { 14, 12, 10, 8, 6, 4, 2, 0 };
-const uint8_t ChannelPlan_GLOBAL::KR920_MAX_PAYLOAD_SIZE[] = { 51, 51, 51, 115, 242, 242, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-const uint8_t ChannelPlan_GLOBAL::KR920_MAX_PAYLOAD_SIZE_REPEATER[] = { 51, 51, 51, 115, 222, 222, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+const uint8_t ChannelPlan_GLOBAL::KR920_MAX_PAYLOAD_SIZE[] = { 51, 51, 51, 115, 242, 242, 0, 0, 0, 0, 0, 0, 242, 242, 0, 0 };
+const uint8_t ChannelPlan_GLOBAL::KR920_MAX_PAYLOAD_SIZE_REPEATER[] = { 51, 51, 51, 115, 222, 222, 0, 0, 0, 0, 0, 0, 222, 222, 0, 0 };
 
 const uint8_t ChannelPlan_GLOBAL::IN865_TX_POWERS[] = { 30, 28, 26, 24, 22, 20, 18, 16, 14, 12, 9 };
-const uint8_t ChannelPlan_GLOBAL::IN865_MAX_PAYLOAD_SIZE[] = { 51, 51, 51, 115, 242, 242, 242, 242, 0, 0, 0, 0, 0, 0, 0, 0 };
-const uint8_t ChannelPlan_GLOBAL::IN865_MAX_PAYLOAD_SIZE_REPEATER[] = { 51, 51, 51, 115, 222, 222, 222, 222, 0, 0, 0, 0, 0, 0, 0, 0 };
+const uint8_t ChannelPlan_GLOBAL::IN865_MAX_PAYLOAD_SIZE[] = { 51, 51, 51, 115, 242, 242, 242, 242, 0, 0, 0, 0, 242, 242, 0, 0 };
+const uint8_t ChannelPlan_GLOBAL::IN865_MAX_PAYLOAD_SIZE_REPEATER[] = { 51, 51, 51, 115, 222, 222, 222, 222, 0, 0, 0, 0, 222, 222, 0, 0 };
 
 const uint8_t ChannelPlan_GLOBAL::EU868_TX_POWERS[] = { 16, 14, 12, 9, 8, 6, 4, 2 };
-const uint8_t ChannelPlan_GLOBAL::EU868_MAX_PAYLOAD_SIZE[] = { 51, 51, 51, 115, 242, 242, 242, 242, 0, 0, 0, 0, 0, 0, 0, 0 };
-const uint8_t ChannelPlan_GLOBAL::EU868_MAX_PAYLOAD_SIZE_REPEATER[] = { 51, 51, 51, 115, 222, 222, 222, 222, 0, 0, 0, 0, 0, 0, 0, 0 };
+const uint8_t ChannelPlan_GLOBAL::EU868_MAX_PAYLOAD_SIZE[] = { 51, 51, 51, 115, 242, 242, 242, 242, 0, 0, 0, 0, 242, 242, 0, 0 };
+const uint8_t ChannelPlan_GLOBAL::EU868_MAX_PAYLOAD_SIZE_REPEATER[] = { 51, 51, 51, 115, 222, 222, 222, 222, 0, 0, 0, 0, 222, 222, 0, 0 };
 
 const uint8_t ChannelPlan_GLOBAL::AU915_TX_POWERS[] = { 30, 28, 26, 24, 22, 20, 18, 16, 14, 12, 10, 8, 6, 4, 2 };
-const uint8_t ChannelPlan_GLOBAL::AU915_MAX_PAYLOAD_SIZE[] = { 51, 51, 51, 115, 242, 242, 242, 0, 53, 129, 242, 242, 242, 242, 0, 0 };
-const uint8_t ChannelPlan_GLOBAL::AU915_MAX_PAYLOAD_SIZE_REPEATER[] = { 51, 51, 51, 115, 222, 222, 222, 0, 33, 109, 222, 222, 222, 222, 0, 0 };
+const uint8_t ChannelPlan_GLOBAL::AU915_MAX_PAYLOAD_SIZE[] = { 51, 51, 51, 115, 242, 242, 242, 0, 0, 242, 242, 0, 0, 0, 0, 0 };
+const uint8_t ChannelPlan_GLOBAL::AU915_MAX_PAYLOAD_SIZE_REPEATER[] = { 51, 51, 51, 115, 222, 222, 222, 0, 0, 222, 222, 0, 0, 0, 0, 0 };
+
+const uint8_t ChannelPlan_GLOBAL::AU915_MAX_DOWNLINK_PAYLOAD_SIZE[] =          { 242, 0, 0, 0, 0, 0, 0, 0, 53, 129, 242, 242, 242, 242, 242, 0 };
+const uint8_t ChannelPlan_GLOBAL::AU915_MAX_DOWNLINK_PAYLOAD_SIZE_REPEATER[] = { 222, 0, 0, 0, 0, 0, 0, 0, 33, 109, 222, 222, 222, 222, 222, 0 };
+
 const uint8_t ChannelPlan_GLOBAL::AU915_MAX_PAYLOAD_SIZE_400[] = { 0, 0, 11, 53, 125, 242, 242, 0, 53, 129, 242, 242, 242, 242, 0, 0 };
 const uint8_t ChannelPlan_GLOBAL::AU915_MAX_PAYLOAD_SIZE_REPEATER_400[] = { 0, 0, 11, 53, 125, 222, 222, 222, 0, 33, 109, 222, 222, 222, 222, 0, 0 };
 const uint8_t ChannelPlan_GLOBAL::AU915_MAX_ERP_VALUES[] = { 8, 10, 12, 13, 14, 16, 18, 20, 21, 24, 26, 27, 29, 30, 33, 36 };
 
-const uint8_t ChannelPlan_GLOBAL::AS923_MAX_PAYLOAD_SIZE[] = { 51, 51, 115, 115, 242, 242, 242, 242, 0, 0, 0, 0, 0, 0, 0, 0 };
-const uint8_t ChannelPlan_GLOBAL::AS923_MAX_PAYLOAD_SIZE_REPEATER[] = { 51, 51, 115, 115, 222, 222, 222, 222, 0, 0, 0, 0, 0, 0, 0, 0 };
-const uint8_t ChannelPlan_GLOBAL::AS923_MAX_PAYLOAD_SIZE_400[] = { 0, 0, 11, 53, 125, 242, 242, 242, 0, 0, 0, 0, 0, 0, 0, 0 };
-const uint8_t ChannelPlan_GLOBAL::AS923_MAX_PAYLOAD_SIZE_REPEATER_400[] = { 0, 0, 11, 53, 125, 222, 222, 222, 0, 0, 0, 0, 0, 0, 0, 0 };
+const uint8_t ChannelPlan_GLOBAL::AS923_MAX_PAYLOAD_SIZE[] = { 51, 51, 115, 115, 242, 242, 242, 242, 0, 0, 0, 0, 242, 242, 0, 0 };
+const uint8_t ChannelPlan_GLOBAL::AS923_MAX_PAYLOAD_SIZE_REPEATER[] = { 51, 51, 115, 115, 222, 222, 222, 222, 0, 0, 0, 0, 222, 222, 0, 0 };
+const uint8_t ChannelPlan_GLOBAL::AS923_MAX_PAYLOAD_SIZE_400[] = { 0, 0, 11, 53, 125, 242, 242, 242, 0, 0, 0, 0, 242, 242, 0, 0 };
+const uint8_t ChannelPlan_GLOBAL::AS923_MAX_PAYLOAD_SIZE_REPEATER_400[] = { 0, 0, 11, 53, 125, 222, 222, 222, 0, 0, 0, 0, 222, 222, 0, 0 };
 const uint8_t ChannelPlan_GLOBAL::AS923_MAX_ERP_VALUES[] = { 8, 10, 12, 13, 14, 16, 18, 20, 21, 24, 26, 27, 29, 30, 33, 36 };
 
 
@@ -150,17 +159,14 @@ void ChannelPlan_GLOBAL::Init_EU868() {
     TX_POWERS = EU868_TX_POWERS;
     MAX_PAYLOAD_SIZE = EU868_MAX_PAYLOAD_SIZE;
     MAX_PAYLOAD_SIZE_REPEATER = EU868_MAX_PAYLOAD_SIZE_REPEATER;
+    MAX_DOWNLINK_PAYLOAD_SIZE = EU868_MAX_PAYLOAD_SIZE;
+    MAX_DOWNLINK_PAYLOAD_SIZE_REPEATER = EU868_MAX_PAYLOAD_SIZE_REPEATER;
 
     _minDatarate = EU868_MIN_DATARATE;
     _minRx2Datarate = EU868_MIN_DATARATE;
 
-#if defined(ENABLE_LORAWAN_OPTIONAL_DATARATES)
-    _maxDatarate = DR_7;
-    _maxRx2Datarate = DR_7;
-#else
-    _maxDatarate = DR_5;
-    _maxRx2Datarate = DR_5;
-#endif
+    _maxDatarate = DR_13;
+    _maxRx2Datarate = DR_13;
 
     _minDatarateOffset = EU868_MIN_DATARATE_OFFSET;
     _maxDatarateOffset = EU868_MAX_DATARATE_OFFSET;
@@ -209,25 +215,41 @@ void ChannelPlan_GLOBAL::Init_EU868() {
     AddDatarate(-1, dr);
     dr.Index++;
 
-    // Skip DR8-15 RFU
+    // Skip DR8-11 RFU
     dr.SpreadingFactor = SF_INVALID;
-    while (dr.Index++ <= DR_15) {
-        AddDatarate(-1, dr);
+    while (dr.Index <= DR_11) {
+        AddDatarate(-1, dr), dr.Index++;
     }
+
+    // Add DR12-13
+    dr.SpreadingFactor = SF_6;
+    dr.Bandwidth = BW_125;
+    dr.PreambleLength = DEFAULT_PREAMBLE_LEN;
+    dr.Coderate = DEFAULT_CODE_RATE;
+    AddDatarate(-1, dr), dr.Index++;
+    
+    dr.SpreadingFactor = SF_5;
+    AddDatarate(-1, dr), dr.Index++;
+
+    // Skip DR14-15 RFU
+    dr.SpreadingFactor = SF_INVALID;
+    AddDatarate(-1, dr), dr.Index++;
+    AddDatarate(-1, dr), dr.Index++;
+
 
     GetSettings()->Session.TxDatarate = 0;
 
     logInfo("Initialize channels...");
 
     Channel chan;
-    chan.DrRange.Fields.Min = DR_0;
-    chan.DrRange.Fields.Max = DR_5;
+    chan.DrRange.Fields.Min = DR_1;
+    chan.DrRange.Fields.Max = DR_0;
     chan.Index = 0;
     chan.Frequency = EU868_125K_FREQ_BASE;
     SetNumberOfChannels(EU868_125K_NUM_CHANS);
 
     for (uint8_t i = 0; i < EU868_DEFAULT_NUM_CHANS; i++) {
-        chan.DrRange.Fields.Max = DR_5;
+        chan.DrRange.Fields.Max = DR_0;
 
         AddChannel(i, chan);
         chan.Index++;
@@ -335,6 +357,9 @@ void ChannelPlan_GLOBAL::Init_US915() {
     MAX_PAYLOAD_SIZE = US915_MAX_PAYLOAD_SIZE;
     MAX_PAYLOAD_SIZE_REPEATER = US915_MAX_PAYLOAD_SIZE_REPEATER;
 
+    MAX_DOWNLINK_PAYLOAD_SIZE = US915_MAX_DOWNLINK_PAYLOAD_SIZE;
+    MAX_DOWNLINK_PAYLOAD_SIZE_REPEATER = US915_MAX_DOWNLINK_PAYLOAD_SIZE_REPEATER;
+
     band.FrequencyMin = US915_FREQ_MIN;
     band.FrequencyMax = US915_FREQ_MAX;
 
@@ -391,7 +416,19 @@ void ChannelPlan_GLOBAL::Init_US915() {
     dr.SpreadingFactor = SF_INVALID;
     AddDatarate(-1, dr), dr.Index++;
     AddDatarate(-1, dr), dr.Index++;
+
+    dr.SpreadingFactor = SF_6;
+    dr.Bandwidth = BW_125;
     AddDatarate(-1, dr), dr.Index++;
+
+    dr.SpreadingFactor = SF_5;
+    dr.Bandwidth = BW_125;
+    AddDatarate(-1, dr), dr.Index++;
+
+    // Skip DR9-15 RFU
+    dr.SpreadingFactor = SF_INVALID;
+    AddDatarate(-1, dr), dr.Index++;
+    
 
     band.PowerMax = 30;
 
@@ -401,17 +438,29 @@ void ChannelPlan_GLOBAL::Init_US915() {
 
     GetSettings()->Session.Rx2DatarateIndex = DR_8;
 
-    // Add DR8-13
-    dr.SpreadingFactor = SF_12;
-    while (dr.SpreadingFactor >= SF_7) {
-        AddDatarate(-1, dr);
-        dr.SpreadingFactor--;
+    dr.SpreadingFactor = SF_5;
+    dr.Bandwidth = BW_500;
+    dr.Index = 0;
+    AddDlDatarate(-1, dr), dr.Index++;;
+
+    // Skip DR1-7 RFU
+    dr.SpreadingFactor = SF_INVALID;
+    for (int i = 1; i < 8; i++) {
+        AddDlDatarate(-1, dr);
         dr.Index++;
     }
 
-    // Skip DR14-15 RFU
+    // Add DR8-14
+    dr.SpreadingFactor = SF_12;
+    while (dr.SpreadingFactor >= SF_6) {
+        AddDlDatarate(-1, dr);
+        dr.SpreadingFactor--;
+        dr.Index++;
+    }
+       
+    // Skip DR15 RFU
     dr.SpreadingFactor = SF_INVALID;
-    AddDatarate(-1, dr), AddDatarate(-1, dr);
+    AddDlDatarate(-1, dr), dr.Index++;
 
     GetSettings()->Session.TxDatarate = DR_0;
     GetSettings()->Session.TxPower = GetSettings()->Network.TxPower;
@@ -446,6 +495,9 @@ void ChannelPlan_GLOBAL::Init_AU915() {
     TX_POWERS = AU915_TX_POWERS;
     MAX_PAYLOAD_SIZE = AU915_MAX_PAYLOAD_SIZE;
     MAX_PAYLOAD_SIZE_REPEATER = AU915_MAX_PAYLOAD_SIZE_REPEATER;
+
+    MAX_DOWNLINK_PAYLOAD_SIZE = AU915_MAX_DOWNLINK_PAYLOAD_SIZE;
+    MAX_DOWNLINK_PAYLOAD_SIZE_REPEATER = AU915_MAX_DOWNLINK_PAYLOAD_SIZE_REPEATER;
 
     band.FrequencyMin = AU915_FREQ_MIN;
     band.FrequencyMax = AU915_FREQ_MAX;
@@ -486,6 +538,7 @@ void ChannelPlan_GLOBAL::Init_AU915() {
     SetNumberOfChannels(AU915_125K_NUM_CHANS + AU915_500K_NUM_CHANS, false);
 
     dr.SpreadingFactor = SF_12;
+    dr.Bandwidth = BW_125;
 
     logInfo("Initialize datarates...");
 
@@ -502,9 +555,22 @@ void ChannelPlan_GLOBAL::Init_AU915() {
     AddDatarate(-1, dr);
     dr.Index++;
 
-    // Skip DR7 RFU
+    // Skip DR7-DR8 RFU
     dr.SpreadingFactor = SF_INVALID;
     AddDatarate(-1, dr), dr.Index++;
+    AddDatarate(-1, dr), dr.Index++;
+
+    // Add DR9-10
+    dr.Bandwidth = BW_125;
+    dr.SpreadingFactor = SF_6;
+    AddDatarate(-1, dr), dr.Index++;
+    dr.SpreadingFactor = SF_5;
+    AddDatarate(-1, dr), dr.Index++;
+
+    // Skip DR11-15 RFU
+    dr.SpreadingFactor = SF_INVALID;
+    AddDatarate(-1, dr), dr.Index++;
+    AddDatarate(-1, dr);
 
     if (GetSettings()->Network.FrequencySubBand == 0) {
         band.PowerMax = 30;
@@ -518,17 +584,30 @@ void ChannelPlan_GLOBAL::Init_AU915() {
 
     GetSettings()->Session.Rx2DatarateIndex = DR_8;
 
-    // Add DR8-13
-    dr.SpreadingFactor = SF_12;
-    while (dr.SpreadingFactor >= SF_7) {
-        AddDatarate(-1, dr);
-        dr.SpreadingFactor--;
+    // Add downlink datarates
+    dr.SpreadingFactor = SF_5;
+    dr.Bandwidth = BW_500;
+    dr.Index = 0;
+    AddDlDatarate(-1, dr), dr.Index++;;
+
+    // Skip DR1-7 RFU
+    dr.SpreadingFactor = SF_INVALID;
+    for (int i = 1; i < 8; i++) {
+        AddDlDatarate(-1, dr);
         dr.Index++;
     }
 
-    // Skip DR14-15 RFU
+    // Add DR8-14
+    dr.SpreadingFactor = SF_12;
+    while (dr.SpreadingFactor >= SF_6) {
+        AddDlDatarate(-1, dr);
+        dr.SpreadingFactor--;
+        dr.Index++;
+    }
+       
+    // Skip DR15 RFU
     dr.SpreadingFactor = SF_INVALID;
-    AddDatarate(-1, dr), AddDatarate(-1, dr);
+    AddDlDatarate(-1, dr), dr.Index++;
 
     GetSettings()->Session.TxDatarate = DR_0;
     GetSettings()->Session.TxPower = GetSettings()->Network.TxPower;
@@ -557,18 +636,16 @@ void ChannelPlan_GLOBAL::Init_AS923() {
     _maxFrequency = 928000000;
 
     MAX_PAYLOAD_SIZE = AS923_MAX_PAYLOAD_SIZE;
+    MAX_DOWNLINK_PAYLOAD_SIZE = AS923_MAX_PAYLOAD_SIZE;
     MAX_PAYLOAD_SIZE_REPEATER = AS923_MAX_PAYLOAD_SIZE_REPEATER;
+    MAX_DOWNLINK_PAYLOAD_SIZE_REPEATER = AS923_MAX_PAYLOAD_SIZE_REPEATER;
 
     _minDatarate = DR_0;
 
     _minRx2Datarate = DR_0;
-#if defined(ENABLE_LORAWAN_OPTIONAL_DATARATES)
-    _maxRx2Datarate = DR_7;
-    _maxDatarate = DR_7;
-#else
-    _maxRx2Datarate = DR_5;
-    _maxDatarate = DR_5;
-#endif
+
+    _maxRx2Datarate = DR_13;
+    _maxDatarate = DR_13;
 
     _minDatarateOffset = 0;
     _maxDatarateOffset = 7;
@@ -730,19 +807,34 @@ void ChannelPlan_GLOBAL::Init_AS923() {
     AddDatarate(-1, dr);
     dr.Index++;
 
-    // Skip DR8-15 RFU
+    // Skip DR8-11 RFU
     dr.SpreadingFactor = SF_INVALID;
-    while (dr.Index++ <= DR_15) {
-        AddDatarate(-1, dr);
+    while (dr.Index <= DR_11) {
+        AddDatarate(-1, dr), dr.Index++;
     }
+
+    // Add DR12-13
+    dr.SpreadingFactor = SF_6;
+    dr.Bandwidth = BW_125;
+    dr.PreambleLength = DEFAULT_PREAMBLE_LEN;
+    dr.Coderate = DEFAULT_CODE_RATE;
+    AddDatarate(-1, dr), dr.Index++;
+    
+    dr.SpreadingFactor = SF_5;
+    AddDatarate(-1, dr), dr.Index++;
+
+    // Skip DR14-15 RFU
+    dr.SpreadingFactor = SF_INVALID;
+    AddDatarate(-1, dr), dr.Index++;
+    AddDatarate(-1, dr), dr.Index++;
 
     GetSettings()->Session.TxDatarate = 0;
 
     logInfo("Initialize channels...");
 
     Channel chan;
-    chan.DrRange.Fields.Min = DR_0;
-    chan.DrRange.Fields.Max = DR_5;
+    chan.DrRange.Fields.Min = DR_1;
+    chan.DrRange.Fields.Max = DR_0;
     chan.Index = 0;
     chan.Frequency = AS923_125K_FREQ_BASE + _as923_freq_offset;
     SetNumberOfChannels(16);
@@ -822,13 +914,15 @@ void ChannelPlan_GLOBAL::Init_KR920() {
 
     TX_POWERS = KR920_TX_POWERS;
     MAX_PAYLOAD_SIZE = KR920_MAX_PAYLOAD_SIZE;
+    MAX_DOWNLINK_PAYLOAD_SIZE = KR920_MAX_PAYLOAD_SIZE;
     MAX_PAYLOAD_SIZE_REPEATER = KR920_MAX_PAYLOAD_SIZE_REPEATER;
+    MAX_DOWNLINK_PAYLOAD_SIZE_REPEATER = KR920_MAX_PAYLOAD_SIZE_REPEATER;
 
-    _minDatarate = 0;
-    _maxDatarate = 5;
+    _minDatarate = DR_0;
+    _maxDatarate = DR_13;
 
     _minRx2Datarate = DR_0;
-    _maxRx2Datarate = DR_5;
+    _maxRx2Datarate = DR_13;
 
     _minDatarateOffset = 0;
     _maxDatarateOffset = 5;
@@ -860,19 +954,34 @@ void ChannelPlan_GLOBAL::Init_KR920() {
         dr.Index++;
     }
 
-    // Skip DR6-15 RFU
+    // Skip DR6-11 RFU
     dr.SpreadingFactor = SF_INVALID;
-    while (dr.Index++ <= DR_15) {
-        AddDatarate(-1, dr);
+    while (dr.Index <= DR_11) {
+        AddDatarate(-1, dr), dr.Index++;
     }
+
+    // Add DR12-13
+    dr.SpreadingFactor = SF_6;
+    dr.Bandwidth = BW_125;
+    dr.PreambleLength = DEFAULT_PREAMBLE_LEN;
+    dr.Coderate = DEFAULT_CODE_RATE;
+    AddDatarate(-1, dr), dr.Index++;
+    
+    dr.SpreadingFactor = SF_5;
+    AddDatarate(-1, dr), dr.Index++;
+
+    // Skip DR14-15 RFU
+    dr.SpreadingFactor = SF_INVALID;
+    AddDatarate(-1, dr), dr.Index++;
+    AddDatarate(-1, dr), dr.Index++;
 
     GetSettings()->Session.TxDatarate = 0;
 
     logInfo("Initialize channels...");
 
     Channel chan;
-    chan.DrRange.Fields.Min = DR_0;
-    chan.DrRange.Fields.Max = DR_5;
+    chan.DrRange.Fields.Min = DR_1;
+    chan.DrRange.Fields.Max = DR_0;
     chan.Index = 0;
     chan.Frequency = 922100000;
     SetNumberOfChannels(16);
@@ -939,18 +1048,15 @@ void ChannelPlan_GLOBAL::Init_IN865() {
 
     TX_POWERS = IN865_TX_POWERS;
     MAX_PAYLOAD_SIZE = IN865_MAX_PAYLOAD_SIZE;
+    MAX_DOWNLINK_PAYLOAD_SIZE = IN865_MAX_PAYLOAD_SIZE;
     MAX_PAYLOAD_SIZE_REPEATER = IN865_MAX_PAYLOAD_SIZE_REPEATER;
+    MAX_DOWNLINK_PAYLOAD_SIZE_REPEATER = IN865_MAX_PAYLOAD_SIZE_REPEATER;
 
     _minDatarate = 0;
     _minRx2Datarate = DR_0;
 
-#if defined(ENABLE_LORAWAN_OPTIONAL_DATARATES)
-    _maxDatarate = DR_7;
-    _maxRx2Datarate = DR_7;
-#else
-    _maxDatarate = DR_5;
-    _maxRx2Datarate = DR_5;
-#endif
+    _maxDatarate = DR_13;
+    _maxRx2Datarate = DR_13;
 
     _minDatarateOffset = 0;
     _maxDatarateOffset = 7;
@@ -983,6 +1089,7 @@ void ChannelPlan_GLOBAL::Init_IN865() {
     }
 
     // Skip DR6
+    dr.SpreadingFactor = SF_INVALID;
     AddDatarate(-1, dr);
     dr.Index++;
 
@@ -994,19 +1101,34 @@ void ChannelPlan_GLOBAL::Init_IN865() {
     AddDatarate(-1, dr);
     dr.Index++;
 
-    // Skip DR8-15 RFU
+    // Skip DR8-11 RFU
     dr.SpreadingFactor = SF_INVALID;
-    while (dr.Index++ <= DR_15) {
-        AddDatarate(-1, dr);
+    while (dr.Index <= DR_11) {
+        AddDatarate(-1, dr), dr.Index++;
     }
+
+    // Add DR12-13
+    dr.SpreadingFactor = SF_6;
+    dr.Bandwidth = BW_125;
+    dr.PreambleLength = DEFAULT_PREAMBLE_LEN;
+    dr.Coderate = DEFAULT_CODE_RATE;
+    AddDatarate(-1, dr), dr.Index++;
+    
+    dr.SpreadingFactor = SF_5;
+    AddDatarate(-1, dr), dr.Index++;
+
+    // Skip DR14-15 RFU
+    dr.SpreadingFactor = SF_INVALID;
+    AddDatarate(-1, dr), dr.Index++;
+    AddDatarate(-1, dr), dr.Index++;
 
     GetSettings()->Session.TxDatarate = 0;
 
     logInfo("Initialize channels...");
 
     Channel chan;
-    chan.DrRange.Fields.Min = DR_0;
-    chan.DrRange.Fields.Max = DR_5;
+    chan.DrRange.Fields.Min = DR_1;
+    chan.DrRange.Fields.Max = DR_0;
     chan.Index = 0;
     chan.Frequency = 865062500;
     SetNumberOfChannels(16);
@@ -1078,18 +1200,15 @@ void ChannelPlan_GLOBAL::Init_RU864() {
 
     TX_POWERS = RU864_TX_POWERS;
     MAX_PAYLOAD_SIZE = RU864_MAX_PAYLOAD_SIZE;
+    MAX_DOWNLINK_PAYLOAD_SIZE = RU864_MAX_PAYLOAD_SIZE;
     MAX_PAYLOAD_SIZE_REPEATER = RU864_MAX_PAYLOAD_SIZE_REPEATER;
+    MAX_DOWNLINK_PAYLOAD_SIZE_REPEATER = RU864_MAX_PAYLOAD_SIZE_REPEATER;
 
     _minDatarate = DR_0;
     _minRx2Datarate = DR_0;
 
-#if defined(ENABLE_LORAWAN_OPTIONAL_DATARATES)
-    _maxDatarate = DR_7;
-    _maxRx2Datarate = DR_7;
-#else
-    _maxDatarate = DR_5;
-    _maxRx2Datarate = DR_5;
-#endif
+    _maxDatarate = DR_13;
+    _maxRx2Datarate = DR_13;
 
     _minDatarateOffset = RU864_MIN_DATARATE_OFFSET;
     _maxDatarateOffset = RU864_MAX_DATARATE_OFFSET;
@@ -1136,26 +1255,38 @@ void ChannelPlan_GLOBAL::Init_RU864() {
     dr.Index++;
 
 
-    // Skip DR8-15 RFU
+    // Skip DR8-11 RFU
     dr.SpreadingFactor = SF_INVALID;
-    while (dr.Index++ <= DR_15) {
-        AddDatarate(-1, dr);
+    while (dr.Index <= DR_11) {
+        AddDatarate(-1, dr), dr.Index++;
     }
 
+    // Add DR12-13
+    dr.SpreadingFactor = SF_6;
+    dr.Bandwidth = BW_125;
+    dr.PreambleLength = DEFAULT_PREAMBLE_LEN;
+    dr.Coderate = DEFAULT_CODE_RATE;
+    AddDatarate(-1, dr), dr.Index++;
+    
+    dr.SpreadingFactor = SF_5;
+    AddDatarate(-1, dr), dr.Index++;
+
+    // Skip DR14-15 RFU
+    dr.SpreadingFactor = SF_INVALID;
+    AddDatarate(-1, dr), dr.Index++;
+    AddDatarate(-1, dr), dr.Index++;
     GetSettings()->Session.TxDatarate = 0;
 
     logInfo("Initialize channels...");
 
     Channel chan;
-    chan.DrRange.Fields.Min = DR_0;
-    chan.DrRange.Fields.Max = DR_5;
+    chan.DrRange.Fields.Min = DR_1;
+    chan.DrRange.Fields.Max = DR_0;
     chan.Index = 0;
     chan.Frequency = RU864_125K_FREQ_BASE;
     SetNumberOfChannels(RU864_125K_NUM_CHANS);
 
     for (uint8_t i = 0; i < RU864_DEFAULT_NUM_CHANS; i++) {
-        chan.DrRange.Fields.Max = DR_5;
-
         AddChannel(i, chan);
         chan.Index++;
         chan.Frequency += RU864_125K_FREQ_STEP;
@@ -1207,6 +1338,8 @@ void ChannelPlan_GLOBAL::Init_RU864() {
 
 uint8_t ChannelPlan_GLOBAL::HandleJoinAccept(const uint8_t* buffer, uint8_t size) {
 
+    logDebug("HandleJoinAccept: size %d buffer[28] = %d", size, buffer[28]);
+
     // byte 28 idicates CFList or ChMask content
     if (IsPlanFixed()) {
         if (size > 17 && buffer[28] == 0x01) {
@@ -1237,11 +1370,13 @@ uint8_t ChannelPlan_GLOBAL::HandleJoinAccept(const uint8_t* buffer, uint8_t size
         for (int i = 13; i < size - 5; i += 3) {
 
             ch.Frequency = ((buffer[i]) | (buffer[i + 1] << 8) | (buffer[i + 2] << 16)) * 100u;
-
+            logDebug("Adding channel %d: %lu", index, ch.Frequency);
+            logDebug("Min: %d Max: %d", _minFrequency, _maxFrequency);
             if (ch.Frequency > 0 && ch.Frequency >= _minFrequency && ch.Frequency <= _maxFrequency) {
+                logDebug("Adding channel %d: %lu", index, ch.Frequency);
                 ch.Index = index;
-                ch.DrRange.Fields.Min = static_cast<int8_t>(DR_0);
-                ch.DrRange.Fields.Max = static_cast<int8_t>(DR_5);
+                ch.DrRange.Fields.Min = static_cast<int8_t>(DR_1);
+                ch.DrRange.Fields.Max = static_cast<int8_t>(DR_0);
                 AddChannel(index, ch);
 
                 if (GetDutyBand(ch.Frequency) > -1)
@@ -1284,7 +1419,7 @@ uint8_t ChannelPlan_GLOBAL::GetMaxDatarate() {
 uint8_t ChannelPlan_GLOBAL::SetTxConfig() {
 
     uint8_t band = GetDutyBand(GetChannel(_txChannel).Frequency);
-    Datarate txDr = GetDatarate(GetSettings()->Session.TxDatarate);
+    Datarate txDr = P2PEnabled() ? GetDlDatarate(GetSettings()->Session.TxDatarate) : GetDatarate(GetSettings()->Session.TxDatarate);
     int8_t max_pwr = _dutyBands[band].PowerMax;
     uint8_t chans_enabled = 0;
 
@@ -1381,12 +1516,17 @@ Channel ChannelPlan_GLOBAL::GetChannel(int8_t index) {
             if (index < 64) {
                 chan.Index = index;
                 chan.DrRange.Fields.Min = GetMinDatarate();
-                chan.DrRange.Fields.Max = _maxDatarate - 1;
+                chan.DrRange.Fields.Max = _maxDatarate;
                 chan.Frequency = _freqUBase125k + (_freqUStep125k * index);
             } else if (index < 72) {
                 chan.Index = index;
-                chan.DrRange.Fields.Min = _maxDatarate;
-                chan.DrRange.Fields.Max = _maxDatarate;
+                if (_plan == US915) {
+                    chan.DrRange.Fields.Min = DR_4;
+                    chan.DrRange.Fields.Max = DR_4;
+                } else if (_plan == AU915) {
+                    chan.DrRange.Fields.Min = DR_6;
+                    chan.DrRange.Fields.Max = DR_6;
+                }
                 chan.Frequency = _freqUBase500k + (_freqUStep500k * (index - 64));
             }
         }
@@ -1424,7 +1564,7 @@ uint8_t ChannelPlan_GLOBAL::SetFrequencySubBand(uint8_t sub_band) {
 
 
 void ChannelPlan_GLOBAL::LogRxWindow(uint8_t wnd) {
-#if defined(MTS_DEBUG)
+#if 1 // defined(MTS_DEBUG)
     RxWindow rxw = GetRxWindow(wnd);
     Datarate rxDr = GetDatarate(rxw.DatarateIndex);
     uint8_t bw = rxDr.Bandwidth;
@@ -1458,6 +1598,9 @@ RxWindow ChannelPlan_GLOBAL::GetRxWindow(uint8_t window, int8_t id) {
         rxw.Frequency = GetSettings()->Network.TxFrequency;
         index = GetSettings()->Session.TxDatarate;
     } else {
+        uint8_t tdr = GetSettings()->Session.TxDatarate;
+        uint8_t offset = GetSettings()->Session.Rx1DatarateOffset;
+
         switch (window) {
         case RX_1:
             if (IsPlanFixed()) {
@@ -1471,55 +1614,97 @@ RxWindow ChannelPlan_GLOBAL::GetRxWindow(uint8_t window, int8_t id) {
                 }
 
                 if (_plan == US915) {
-                    if (GetSettings()->Session.TxDatarate <= DR_4) {
-                        index = GetSettings()->Session.TxDatarate + 10 - GetSettings()->Session.Rx1DatarateOffset;
+                    if (tdr <= DR_4) {
+                        index = tdr + 10 - offset;
 
                         if (index < DR_8)
                             index = DR_8;
-                        if (index > DR_13)
+                        if (index > DR_13) // DR_4 is 13 at offset 0 and 1
                             index = DR_13;
-                    } else if (GetSettings()->Session.TxDatarate >= DR_8) {
-                        index = GetSettings()->Session.TxDatarate - GetSettings()->Session.Rx1DatarateOffset;
+                    } else if (tdr <= DR_8) {
+                        if (tdr == DR_8) {
+                            if (offset == 0) {
+                                index = DR_0;
+                            } else {
+                                index = 15 - offset;
+                            }
+                        } else if (tdr == DR_7) {
+                            index = DR_14 - offset;
+                        }
+                        // DR_5 and DR_6 are LR-FHSS and not supported
+                    } else if (tdr > DR_8) {
+                        // This case should not happen, P2P does not open RX1
+                        index = tdr - offset;
                         if (index < DR_8)
                             index = DR_8;
-                    }
+                    }   
                 } else {
-                    if (GetSettings()->Session.TxDatarate <= DR_6) {
-                        index = GetSettings()->Session.TxDatarate + 8 - GetSettings()->Session.Rx1DatarateOffset;
+                    // AU915
+                    if (tdr <= DR_6) {
+                        index = tdr + 8 - offset;
 
                         if (index < DR_8)
                             index = DR_8;
                         if (index > DR_13)
                             index = DR_13;
-                    } else if (GetSettings()->Session.TxDatarate >= DR_8) {
-                        index = GetSettings()->Session.TxDatarate - GetSettings()->Session.Rx1DatarateOffset;
+                    } else if (tdr <= DR_10) {
+                        if (tdr == DR_10) {
+                            if (offset == 0) {
+                                index = DR_0;
+                            } else {
+                                index = 15 - offset;
+                            }
+                        } else if (tdr == DR_9) {
+                            index = DR_14 - offset;
+                        }
+                        // DR_7 and DR_8 are LR-FHSS and not supported
+                    } else if (tdr > DR_10) {
+                        // This case should not happen, P2P does not open RX1
+                        index = tdr - offset;
                         if (index < DR_8)
                             index = DR_8;
                     }
                 }
             } else {
                 rxw.Frequency = _channels[_txChannel].Frequency;
-                if (IsPlanAS923()) {
-                    if (GetSettings()->Session.Rx1DatarateOffset >= 6) {
-                        index =  GetSettings()->Session.TxDatarate + (GetSettings()->Session.Rx1DatarateOffset == 6 ? 1 : 2);
-                        index = std::min<int>(index, 7);
-                    } else if (GetSettings()->Session.TxDatarate > GetSettings()->Session.Rx1DatarateOffset) {
-                        index = GetSettings()->Session.TxDatarate - GetSettings()->Session.Rx1DatarateOffset;
+    
+                if (_plan == IN865 && offset >= 6) {
+                    index =  tdr + (offset == 6 ? 1 : 2);
+                    if (index == DR_6)
+                        index = DR_5;
+                    index = std::min<int>(index, _maxDatarate);
+                } else if (tdr < offset) {
+                    index = 0;
+                } else if (offset == 6) {
+                    index = std::min<int8_t>(std::max<int8_t>(_minDatarate, tdr + 1), _maxDatarate);
+                    if (index == 8)
+                        index = 7;
+                } else if (offset == 7) {
+                    index = std::min<int8_t>(std::max<int8_t>(_minDatarate, tdr + 2), _maxDatarate);
+                    if (index == 9)
+                        index = 7;
+                } else if (tdr <= DR_7) {
+                    index = std::min<int8_t>(std::max<int8_t>(_minDatarate, tdr - offset), 7);
+                } else if (tdr > offset) {
+                    if (tdr < DR_7) {
+                        index = tdr - offset;
                     } else {
-                        index = 0;
-                    }
-                } else {
-                    if (_plan == IN865 && GetSettings()->Session.Rx1DatarateOffset >= 6) {
-                        index =  GetSettings()->Session.TxDatarate + (GetSettings()->Session.Rx1DatarateOffset == 6 ? 1 : 2);
-                        if (index == DR_6)
-                            index = DR_5;
-                        index = std::min<int>(index, _maxDatarate);
-                    } else if (GetSettings()->Session.TxDatarate > GetSettings()->Session.Rx1DatarateOffset) {
-                        index = GetSettings()->Session.TxDatarate - GetSettings()->Session.Rx1DatarateOffset;
-                    } else {
-                        index = 0;
+                        if (tdr == DR_12) {
+                            if (offset == 0) {
+                                index = tdr;
+                            } else {
+                                index = DR_6 - offset;
+                            }
+                        } else if (tdr == DR_13) {
+                            if (offset <= 1) {
+                                index = tdr - offset;
+                            } else {
+                                index = DR_7 - offset;
+                            }
+                        }
                     }
                 }
+                
             }
             break;
 
@@ -1619,12 +1804,23 @@ uint8_t ChannelPlan_GLOBAL::HandleRxParamSetup(const uint8_t* payload, uint8_t i
         status &= 0xFE; // Channel frequency KO
     }
 
-    if (datarate < _minRx2Datarate || datarate > _maxRx2Datarate) {
-        logInfo("DR KO");
-        status &= 0xFD; // Datarate KO
-    } else if (_plan == IN865 && datarate == DR_6) {
-        logInfo("DR KO");
-        status &= 0xFD; // Datarate KO
+    if (IsPlanFixed()) {
+        if (datarate != 0 && (datarate < _minRx2Datarate || datarate > _maxRx2Datarate)) {
+            logInfo("DR KO");
+            status &= 0xFD; // Datarate KO
+        }
+    } else {
+        if (datarate < _minRx2Datarate || datarate > _maxRx2Datarate) {
+            logInfo("DR KO");
+            status &= 0xFD; // Datarate KO
+#if defined(ENABLE_LORAWAN_OPTIONAL_DATARATES)
+        } else if (datarate > DR_7 && datarate < DR_12) { // No support for DR8-11
+#else
+        } else if (datarate > DR_5 && datarate < DR_12) { // No support for DR6-11
+#endif
+            logInfo("DR KO");
+            status &= 0xFD; // Datarate KO
+        }
     }
 
     if (drOffset < 0 || drOffset > _maxDatarateOffset) {
@@ -1685,17 +1881,28 @@ uint8_t ChannelPlan_GLOBAL::HandleNewChannel(const uint8_t* payload, uint8_t ind
             status &= 0xFE; // Channel frequency KO
         }
 
-        if (chParam.DrRange.Fields.Min > chParam.DrRange.Fields.Max && chParam.Frequency != 0) {
-            logError("New Channel datarate min/max KO");
-            status &= 0xFD; // Datarate range KO
-        } else if ((chParam.DrRange.Fields.Min > _maxDatarate) &&
-                chParam.Frequency != 0) {
-            logError("New Channel datarate min KO");
-            status &= 0xFD; // Datarate range KO
-        } else if ((chParam.DrRange.Fields.Max > _maxDatarate) &&
-                chParam.Frequency != 0) {
-            logError("New Channel datarate max KO");
-            status &= 0xFD; // Datarate range KO
+        if (chParam.Frequency != 0) {
+#if defined(ENABLE_LORAWAN_OPTIONAL_DATARATES)
+            if (((chParam.DrRange.Fields.Min > 5 && chParam.DrRange.Fields.Max != 0) && chParam.DrRange.Fields.Max > 7) ) {
+                logError("New Channel datarate max>7 KO");
+#else
+            if (((chParam.DrRange.Fields.Min > 5 && chParam.DrRange.Fields.Max != 0) && chParam.DrRange.Fields.Max > 5) ) {
+                logError("New Channel datarate max>5 KO");
+#endif
+                status &= 0xFD; // Datarate range KO
+            } else if (_plan == IN865 && (chParam.DrRange.Fields.Max == 6 || chParam.DrRange.Fields.Min == 6)) {
+                logError("New Channel datarate IN865 DR6 KO");
+                status &= 0xFD; // Datarate range KO
+            } else if ((chParam.DrRange.Fields.Max != 0 && chParam.DrRange.Fields.Max < chParam.DrRange.Fields.Min) ) {
+                logError("New Channel datarate min/max KO");
+                status &= 0xFD; // Datarate range KO
+            } else if ((chParam.DrRange.Fields.Min > _maxDatarate) ) {
+                logError("New Channel datarate min KO");
+                status &= 0xFD; // Datarate range KO
+            } else if ((chParam.DrRange.Fields.Max > _maxDatarate)) {
+                logError("New Channel datarate max KO");
+                status &= 0xFD; // Datarate range KO
+            }
         }
 
         if ((status & 0x03) == 0x03) {
@@ -1786,9 +1993,23 @@ uint8_t ChannelPlan_GLOBAL::HandlePingSlotChannelReq(const uint8_t* payload, uin
         status &= 0xFE; // Channel frequency KO
     }
 
-    if (datarate < _minRx2Datarate || datarate > _maxRx2Datarate) {
-        logInfo("DR KO");
-        status &= 0xFD; // Datarate KO
+    if (IsPlanFixed()) {
+        if (datarate != 0 && (datarate < _minRx2Datarate || datarate > _maxRx2Datarate)) {
+            logInfo("DR KO");
+            status &= 0xFD; // Datarate KO
+        }
+    } else {
+        if (datarate < _minRx2Datarate || datarate > _maxRx2Datarate) {
+            logInfo("DR KO");
+            status &= 0xFD; // Datarate KO
+#if defined(ENABLE_LORAWAN_OPTIONAL_DATARATES)
+        } else if (datarate > DR_7 && datarate < DR_12) { // No support for DR8-11
+#else
+        } else if (datarate > DR_5 && datarate < DR_12) { // No support for DR6-11
+#endif
+            logInfo("DR KO");
+            status &= 0xFD; // Datarate KO
+        }
     }
 
     if ((status & 0x03) == 0x03) {
@@ -1872,6 +2093,7 @@ uint8_t ChannelPlan_GLOBAL::HandleAdrCommand(const uint8_t* payload, uint8_t ind
         nbRep = 1;
     }
 
+    // full check in validateAdrConfiguration()
     if (datarate != 0xF && datarate > _maxDatarate) {
         status &= 0xFD; // Datarate KO
     }
@@ -2038,6 +2260,39 @@ uint8_t ChannelPlan_GLOBAL::HandleAdrCommand(const uint8_t* payload, uint8_t ind
     return LORA_OK;
 }
 
+void ChannelPlan_GLOBAL::DecrementDatarate() {
+    if (GetSettings()->Session.TxDatarate >  GetMinDatarate())
+        GetSettings()->Session.TxDatarate--;
+
+    if (_plan == US915) {
+        // Skip DR 5 and 6 (LR-FHSS), ADR also skips DR4 in backoff
+        if (GetSettings()->Session.TxDatarate == DR_6)
+            GetSettings()->Session.TxDatarate = DR_3;
+    } else if (_plan == AU915) {
+        // Skip DR 7 and 8 (LR-FHSS), ADR also skips DR6 in backoff
+        if (GetSettings()->Session.TxDatarate == DR_8)
+            GetSettings()->Session.TxDatarate = DR_5;
+    } else {
+        if (GetSettings()->Session.TxDatarate == DR_11)
+            GetSettings()->Session.TxDatarate = DR_5;
+    }
+}
+
+void ChannelPlan_GLOBAL::IncrementDatarate() {
+    if (GetSettings()->Session.TxDatarate < _maxDatarate)
+        GetSettings()->Session.TxDatarate++;
+
+    if (_plan == US915) {
+        // Skip DR 5 and 6 (LR-FHSS), ADR also skips DR4 in backoff
+        if (GetSettings()->Session.TxDatarate == DR_4)
+            GetSettings()->Session.TxDatarate = DR_6;
+    } else if (_plan == AU915) {
+        // Skip DR 7 and 8 (LR-FHSS), ADR also skips DR6 in backoff
+        if (GetSettings()->Session.TxDatarate == DR_6)
+            GetSettings()->Session.TxDatarate = DR_9;
+    }
+}
+
 uint8_t ChannelPlan_GLOBAL::ValidateAdrConfiguration() {
     uint8_t status = 0x07;
     uint8_t chans_enabled = 0;
@@ -2045,9 +2300,25 @@ uint8_t ChannelPlan_GLOBAL::ValidateAdrConfiguration() {
     uint8_t power = GetSettings()->Session.TxPower;
 
     if (GetSettings()->Network.ADREnabled) {
-        if (datarate > _maxDatarate) {
-            logWarning("ADR Datarate KO - outside allowed range");
-            status &= 0xFD; // Datarate KO
+        if (_plan == US915) {
+            if (datarate > _maxDatarate || datarate == DR_5 || datarate == DR_6) {
+                logWarning("ADR Datarate KO - outside allowed range");
+                status &= 0xFD; // Datarate KO
+            }
+        } else if (_plan == AU915) {
+            if (datarate <  GetMinDatarate() || datarate > _maxDatarate || datarate == DR_7 || datarate == DR_8) {
+                logWarning("ADR Datarate KO - outside allowed range");
+                status &= 0xFD; // Datarate KO
+            }
+        } else {
+#if defined(ENABLE_LORAWAN_OPTIONAL_DATARATES)
+            if (datarate > _maxDatarate || (datarate > DR_7 && datarate < DR_12)) {
+#else
+            if (datarate > _maxDatarate || (datarate > DR_5 && datarate < DR_12)) {
+#endif
+                logWarning("ADR Datarate KO - outside allowed range");
+                status &= 0xFD; // Datarate KO
+            }
         }
 
         if (IsPlanAS923() || _plan == AU915) {
@@ -2074,15 +2345,14 @@ uint8_t ChannelPlan_GLOBAL::ValidateAdrConfiguration() {
         chans_enabled += CountBits(_channelMask[1]);
         chans_enabled += CountBits(_channelMask[2]);
         chans_enabled += CountBits(_channelMask[3]);
-        // Semtech reference (LoRaMac-node) enforces at least 2 channels
-        if (datarate < 4 && chans_enabled < 2) {
-            logWarning("ADR Channel Mask KO - at least 2 125kHz channels must be enabled");
-            status &= 0xFE; // ChannelMask KO
-        }
 
         switch (_plan) {
             case US915:
             {
+                if (datarate != 4 && chans_enabled < 2) {
+                    logWarning("ADR Channel Mask KO - at least 2 125kHz channels must be enabled");
+                    status &= 0xFE; // ChannelMask KO
+                }
                 // if TXDR == 4 (SF8@500kHz) at least 1 500kHz channel must be enabled
                 if (datarate == DR_4 && (CountBits(_channelMask[4] & 0xFF) == 0)) {
                     logWarning("ADR Datarate KO - DR4 requires at least 1 500kHz channel enabled");
@@ -2092,9 +2362,13 @@ uint8_t ChannelPlan_GLOBAL::ValidateAdrConfiguration() {
             break;
             case AU915:
             {
+                if (datarate != 6 && chans_enabled < 2) {
+                    logWarning("ADR Channel Mask KO - at least 2 125kHz channels must be enabled");
+                    status &= 0xFE; // ChannelMask KO
+                }
                 // if TXDR == 6 (SF8@500kHz) at least 1 500kHz channel must be enabled
                 if (datarate == DR_6 && (CountBits(_channelMask[4] & 0xFF) == 0)) {
-                    logWarning("ADR Datarate KO - DR4 requires at least 1 500kHz channel enabled");
+                    logWarning("ADR Datarate KO - DR6 requires at least 1 500kHz channel enabled");
                     status &= 0xFD; // Datarate KO
                 }
             }
@@ -2123,6 +2397,8 @@ uint8_t ChannelPlan_GLOBAL::ValidateAdrConfiguration() {
     return status;
 }
 
+
+
 uint32_t ChannelPlan_GLOBAL::GetTimeOffAir()
 {
     uint32_t min = 0;
@@ -2141,10 +2417,9 @@ uint32_t ChannelPlan_GLOBAL::GetTimeOffAir()
             }
         } else {
             for (size_t i = 0; i < _channels.size(); i++) {
-                if (IsChannelEnabled(i) && GetChannel(i).Frequency != 0 &&
-                    !(GetSettings()->Session.TxDatarate < GetChannel(i).DrRange.Fields.Min ||
-                    GetSettings()->Session.TxDatarate > GetChannel(i).DrRange.Fields.Max)) {
-
+                DatarateRange range = GetChannel(i).DrRange;
+                if (IsChannelEnabled(i) && GetChannel(i).Frequency != 0 
+                    && IsInRange(GetSettings()->Session.TxDatarate, range)) {
                     band = GetDutyBand(GetChannel(i).Frequency);
                     if (band != -1) {
                         // logDebug("band: %d time-off: %d now: %d", band, _dutyBands[band].TimeOffEnd, now);
@@ -2310,7 +2585,7 @@ uint8_t ChannelPlan_GLOBAL::GetNextChannel()
         start = _numChans125k;
     }
 
-// Search how many channels are enabled
+    // Search how many channels are enabled
     DatarateRange range;
     uint8_t dr_index = GetSettings()->Session.TxDatarate;
     uint32_t now = std::chrono::duration_cast<std::chrono::milliseconds>(_dutyCycleTimer.elapsed_time()).count();
@@ -2325,7 +2600,7 @@ uint8_t ChannelPlan_GLOBAL::GetNextChannel()
         range = GetChannel(i).DrRange;
         // logDebug("chan: %d freq: %d range:%02x", i, GetChannel(i).Frequency, range.Value);
 
-        if (IsChannelEnabled(i) && (dr_index >= range.Fields.Min && dr_index <= range.Fields.Max)) {
+        if (IsChannelEnabled(i) && IsInRange(GetSettings()->Session.TxDatarate, range)) {
             int8_t band = GetDutyBand(GetChannel(i).Frequency);
             // logDebug("band: %d freq: %d", band, _channels[i].Frequency);
             if (band != -1 && _dutyBands[band].TimeOffEnd == 0) {
@@ -2527,20 +2802,15 @@ uint8_t ChannelPlan_GLOBAL::GetMaxPayloadSize(uint8_t dr, Direction dir) {
         }
     } else {
         if (GetSettings()->Network.RepeaterMode)
-            return MAX_PAYLOAD_SIZE_REPEATER[dr];
+            return dir == DIR_UP ? MAX_PAYLOAD_SIZE_REPEATER[dr] : MAX_DOWNLINK_PAYLOAD_SIZE_REPEATER[dr];
         else
-            return MAX_PAYLOAD_SIZE[dr];
+            return dir == DIR_UP ? MAX_PAYLOAD_SIZE[dr] : MAX_DOWNLINK_PAYLOAD_SIZE[dr];
     }
 
     return 0;
 }
 
 
-void ChannelPlan_GLOBAL::DecrementDatarate() {
-    if (GetSettings()->Session.TxDatarate > GetMinDatarate()) {
-        GetSettings()->Session.TxDatarate--;
-    }
-}
 
 uint8_t ChannelPlan_GLOBAL::DecodeBeacon(const uint8_t* payload, size_t size, BeaconData_t& data) {
     uint16_t crc1, crc1_rx, crc2, crc2_rx;
