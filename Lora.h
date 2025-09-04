@@ -43,7 +43,6 @@ namespace lora {
      * Spreading factor of a Datarate, lower spreading factor gives higher datarate
      */
     enum SpreadingFactors {
-        SF_5 = 5, //!< Spreading factor 5
         SF_6 = 6,
         SF_7,
         SF_8,

@@ -22,8 +22,8 @@ using namespace lora;
 
 // MWF - changed KR920 to match final 1.0.2 regional spec
 const uint8_t ChannelPlan_KR920::KR920_TX_POWERS[] = { 14, 12, 10, 8, 6, 4, 2, 0 };
-const uint8_t ChannelPlan_KR920::KR920_MAX_PAYLOAD_SIZE[] = { 51, 51, 51, 115, 242, 242, 0, 0, 0, 0, 0, 0, 242, 242, 0, 0 };
-const uint8_t ChannelPlan_KR920::KR920_MAX_PAYLOAD_SIZE_REPEATER[] = { 51, 51, 51, 115, 222, 222, 0, 0, 0, 0, 0, 0, 222, 222, 0, 0 };
+const uint8_t ChannelPlan_KR920::KR920_MAX_PAYLOAD_SIZE[] = { 51, 51, 51, 115, 242, 242, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+const uint8_t ChannelPlan_KR920::KR920_MAX_PAYLOAD_SIZE_REPEATER[] = { 51, 51, 51, 115, 222, 222, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 
 ChannelPlan_KR920::ChannelPlan_KR920()
 :
@@ -75,15 +75,13 @@ void ChannelPlan_KR920::Init() {
 
     TX_POWERS = KR920_TX_POWERS;
     MAX_PAYLOAD_SIZE = KR920_MAX_PAYLOAD_SIZE;
-    MAX_DOWNLINK_PAYLOAD_SIZE = KR920_MAX_PAYLOAD_SIZE;
     MAX_PAYLOAD_SIZE_REPEATER = KR920_MAX_PAYLOAD_SIZE_REPEATER;
-    MAX_DOWNLINK_PAYLOAD_SIZE_REPEATER = KR920_MAX_PAYLOAD_SIZE_REPEATER;
 
-    _minDatarate = DR_0;
-    _maxDatarate = DR_13;
+    _minDatarate = 0;
+    _maxDatarate = 5;
 
     _minRx2Datarate = DR_0;
-    _maxRx2Datarate = DR_13;
+    _maxRx2Datarate = DR_5;
 
     _minDatarateOffset = 0;
     _maxDatarateOffset = 5;
@@ -115,26 +113,11 @@ void ChannelPlan_KR920::Init() {
         dr.Index++;
     }
 
-    // Skip DR6-11 RFU
+    // Skip DR6-15 RFU
     dr.SpreadingFactor = SF_INVALID;
-    while (dr.Index <= DR_11) {
-        AddDatarate(-1, dr), dr.Index++;
+    while (dr.Index++ <= DR_15) {
+        AddDatarate(-1, dr);
     }
-
-    // Add DR12-13
-    dr.SpreadingFactor = SF_6;
-    dr.Bandwidth = BW_125;
-    dr.PreambleLength = DEFAULT_PREAMBLE_LEN;
-    dr.Coderate = DEFAULT_CODE_RATE;
-    AddDatarate(-1, dr), dr.Index++;
-    
-    dr.SpreadingFactor = SF_5;
-    AddDatarate(-1, dr), dr.Index++;
-
-    // Skip DR14-15 RFU
-    dr.SpreadingFactor = SF_INVALID;
-    AddDatarate(-1, dr), dr.Index++;
-    AddDatarate(-1, dr), dr.Index++;
 
     GetSettings()->Session.TxDatarate = 0;
 
@@ -212,8 +195,8 @@ uint8_t ChannelPlan_KR920::HandleJoinAccept(const uint8_t* buffer, uint8_t size)
 
             if (ch.Frequency > 0 && ch.Frequency >= _minFrequency && ch.Frequency <= _maxFrequency) {
                 ch.Index = index;
-                ch.DrRange.Fields.Min = static_cast<int8_t>(DR_1);
-                ch.DrRange.Fields.Max = static_cast<int8_t>(DR_0);
+                ch.DrRange.Fields.Min = static_cast<int8_t>(DR_0);
+                ch.DrRange.Fields.Max = static_cast<int8_t>(DR_5);
                 AddChannel(index, ch);
 
                 if (GetDutyBand(ch.Frequency) > -1)
@@ -318,36 +301,15 @@ RxWindow ChannelPlan_KR920::GetRxWindow(uint8_t window, int8_t id) {
         rxw.Frequency = GetSettings()->Network.TxFrequency;
         index = GetSettings()->Session.TxDatarate;
     } else {
-        uint8_t tdr = GetSettings()->Session.TxDatarate;
-        uint8_t offset = GetSettings()->Session.Rx1DatarateOffset;
-
         switch (window) {
         case RX_1:
             // Use same frequency as TX
             rxw.Frequency = _channels[_txChannel].Frequency;
 
-            if (tdr < offset) {
+            if (GetSettings()->Session.TxDatarate > GetSettings()->Session.Rx1DatarateOffset) {
+                index = GetSettings()->Session.TxDatarate - GetSettings()->Session.Rx1DatarateOffset;
+            } else {
                 index = 0;
-            } else if (tdr <= DR_7) {
-                index = std::min<int8_t>(std::max<int8_t>(_minDatarate, tdr - offset), 7);
-            } else if (tdr > offset) {
-                if (tdr < DR_7) {
-                    index = tdr - offset;
-                } else {
-                    if (tdr == DR_12) {
-                        if (offset == 0) {
-                            index = tdr;
-                        } else {
-                            index = DR_6 - offset;
-                        }
-                    } else if (tdr == DR_13) {
-                        if (offset <= 1) {
-                            index = tdr - offset;
-                        } else {
-                            index = DR_7 - offset;
-                        }
-                    }
-                }
             }
 
             break;
@@ -422,9 +384,6 @@ uint8_t ChannelPlan_KR920::HandleRxParamSetup(const uint8_t* payload, uint8_t in
     if (datarate < _minRx2Datarate || datarate > _maxRx2Datarate) {
         logInfo("DR KO");
         status &= 0xFD; // Datarate KO
-    } else if (datarate > DR_5 && datarate < DR_12) { // No support for DR6-11
-        logInfo("DR KO");
-        status &= 0xFD; // Datarate KO
     }
 
     if (drOffset < 0 || drOffset > _maxDatarateOffset) {
@@ -467,21 +426,18 @@ uint8_t ChannelPlan_KR920::HandleNewChannel(const uint8_t* payload, uint8_t inde
         status &= 0xFE; // Channel frequency KO
     }
 
-        if (chParam.Frequency != 0) {
-            if (((chParam.DrRange.Fields.Min > 5 && chParam.DrRange.Fields.Max != 0) && chParam.DrRange.Fields.Max > 5) ) {
-                logError("New Channel datarate max>5 KO");
-                status &= 0xFD; // Datarate range KO
-            } else if ((chParam.DrRange.Fields.Max != 0 && chParam.DrRange.Fields.Max < chParam.DrRange.Fields.Min) ) {
-                logError("New Channel datarate min/max KO");
-                status &= 0xFD; // Datarate range KO
-            } else if ((chParam.DrRange.Fields.Min > _maxDatarate) ) {
-                logError("New Channel datarate min KO");
-                status &= 0xFD; // Datarate range KO
-            } else if ((chParam.DrRange.Fields.Max > _maxDatarate)) {
-                logError("New Channel datarate max KO");
-                status &= 0xFD; // Datarate range KO
-            }
-        }
+    if (chParam.DrRange.Fields.Min > chParam.DrRange.Fields.Max && chParam.Frequency != 0) {
+        logError("New Channel datarate min/max KO");
+        status &= 0xFD; // Datarate range KO
+    } else if ((chParam.DrRange.Fields.Min < _minDatarate || chParam.DrRange.Fields.Min > _maxDatarate) &&
+               chParam.Frequency != 0) {
+        logError("New Channel datarate min KO");
+        status &= 0xFD; // Datarate range KO
+    } else if ((chParam.DrRange.Fields.Max < _minDatarate || chParam.DrRange.Fields.Max > _maxDatarate) &&
+               chParam.Frequency != 0) {
+        logError("New Channel datarate max KO");
+        status &= 0xFD; // Datarate range KO
+    }
 
     if ((status & 0x03) == 0x03) {
         logInfo("New Channel accepted index: %d freq: %lu drRange: %02x", channelIndex, chParam.Frequency, chParam.DrRange.Value);
@@ -514,9 +470,6 @@ uint8_t ChannelPlan_KR920::HandlePingSlotChannelReq(const uint8_t* payload, uint
     }
 
     if (datarate < _minRx2Datarate || datarate > _maxRx2Datarate) {
-        logInfo("DR KO");
-        status &= 0xFD; // Datarate KO
-    } else if (datarate > DR_5 && datarate < DR_12) { // No support for DR6-11
         logInfo("DR KO");
         status &= 0xFD; // Datarate KO
     }
@@ -639,12 +592,10 @@ uint8_t ChannelPlan_KR920::ValidateAdrConfiguration() {
     uint8_t power = GetSettings()->Session.TxPower;
 
     if (GetSettings()->Network.ADREnabled) {
-
-        if (datarate > _maxDatarate || (datarate > DR_5 && datarate < DR_12)) {
+        if (datarate > _maxDatarate) {
             logWarning("ADR Datarate KO - outside allowed range");
             status &= 0xFD; // Datarate KO
         }
-
         if (power < _minTxPower || power > _maxTxPower) {
             logWarning("ADR TX Power KO - outside allowed range");
             status &= 0xFB; // TxPower KO
@@ -681,9 +632,9 @@ uint32_t ChannelPlan_KR920::GetTimeOffAir()
             }
         } else {
             for (size_t i = 0; i < _channels.size(); i++) {
-                DatarateRange range = GetChannel(i).DrRange;
-                if (IsChannelEnabled(i) && GetChannel(i).Frequency != 0 
-                    && IsInRange(GetSettings()->Session.TxDatarate, range)) {
+                if (IsChannelEnabled(i) && GetChannel(i).Frequency != 0 &&
+                    !(GetSettings()->Session.TxDatarate < GetChannel(i).DrRange.Fields.Min ||
+                    GetSettings()->Session.TxDatarate > GetChannel(i).DrRange.Fields.Max)) {
 
                     band = GetDutyBand(GetChannel(i).Frequency);
                     if (band != -1) {
@@ -819,8 +770,9 @@ uint8_t ChannelPlan_KR920::GetNextChannel()
         start = _numChans125k;
     }
 
-    // Search how many channels are enabled
+// Search how many channels are enabled
     DatarateRange range;
+    uint8_t dr_index = GetSettings()->Session.TxDatarate;
     auto now = duration_cast<milliseconds>(_dutyCycleTimer.elapsed_time()).count();
 
     for (size_t i = 0; i < _dutyBands.size(); i++) {
@@ -833,7 +785,7 @@ uint8_t ChannelPlan_KR920::GetNextChannel()
         range = GetChannel(i).DrRange;
         // logDebug("chan: %d freq: %d range:%02x", i, GetChannel(i).Frequency, range.Value);
 
-        if (IsChannelEnabled(i) && IsInRange(GetSettings()->Session.TxDatarate, range)) {
+        if (IsChannelEnabled(i) && (dr_index >= range.Fields.Min && dr_index <= range.Fields.Max)) {
             int8_t band = GetDutyBand(GetChannel(i).Frequency);
             // logDebug("band: %d freq: %d", band, _channels[i].Frequency);
             if (band != -1 && _dutyBands[band].TimeOffEnd == 0) {

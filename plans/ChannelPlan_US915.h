@@ -39,7 +39,7 @@ namespace lora {
     const uint32_t US915_FREQ_MAX = 928000000;
 
     const uint8_t US915_MIN_DATARATE = (uint8_t) DR_0;          //!< Minimum transmit datarate for US915
-    const uint8_t US915_MAX_DATARATE = (uint8_t) DR_8;          //!< Maximum transmit datarate for US915
+    const uint8_t US915_MAX_DATARATE = (uint8_t) DR_4;          //!< Maximum transmit datarate for US915
 
     const uint8_t US915_MIN_DATARATE_OFFSET = (uint8_t) 0;      //!< Minimum transmit datarate for US915
     const uint8_t US915_MAX_DATARATE_OFFSET = (uint8_t) 3;      //!< Maximum transmit datarate for US915
@@ -266,9 +266,6 @@ namespace lora {
 
             virtual uint8_t GetMaxDatarate();
 
-            virtual void DecrementDatarate();
-            virtual void IncrementDatarate();
-
             /**
              * Check if this packet is a beacon and if so extract parameters needed
              * @param payload of potential beacon
@@ -292,8 +289,6 @@ namespace lora {
             static const uint8_t US915_TX_POWERS[16];                   //!< List of available tx powers
             static const uint8_t US915_MAX_PAYLOAD_SIZE[];              //!< List of max payload sizes for each datarate
             static const uint8_t US915_MAX_PAYLOAD_SIZE_REPEATER[];     //!< List of repeater compatible max payload sizes for each datarate
-            static const uint8_t US915_MAX_DOWNLINK_PAYLOAD_SIZE[];              //!< List of max payload sizes for each datarate
-            static const uint8_t US915_MAX_DOWNLINK_PAYLOAD_SIZE_REPEATER[];     //!< List of repeater compatible max payload sizes for each datarate
 
             typedef struct __attribute__((packed)) {
                 uint8_t RFU1[5];

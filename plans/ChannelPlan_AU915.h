@@ -39,7 +39,7 @@ namespace lora {
     const uint32_t AU915_FREQ_MAX = 928000000;
 
     const uint8_t AU915_MIN_DATARATE = (uint8_t) DR_0;          //!< Minimum transmit datarate for AU915
-    const uint8_t AU915_MAX_DATARATE = (uint8_t) DR_10;          //!< Maximum transmit datarate for AU915
+    const uint8_t AU915_MAX_DATARATE = (uint8_t) DR_6;          //!< Maximum transmit datarate for AU915
 
     const uint8_t AU915_MIN_DATARATE_OFFSET = (uint8_t) 0;      //!< Minimum transmit datarate for AU915
     const uint8_t AU915_MAX_DATARATE_OFFSET = (uint8_t) 5;      //!< Maximum transmit datarate for AU915

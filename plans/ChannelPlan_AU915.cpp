@@ -329,7 +329,7 @@ Channel ChannelPlan_AU915::GetChannel(int8_t index) {
         if (index < 64) {
             chan.Index = index;
             chan.DrRange.Fields.Min = GetMinDatarate();
-            chan.DrRange.Fields.Max = _maxDatarate;
+            chan.DrRange.Fields.Max = _maxDatarate - 1;
             chan.Frequency = _freqUBase125k + (_freqUStep125k * index);
         } else if (index < 72) {
             chan.Index = index;
@@ -405,9 +405,6 @@ RxWindow ChannelPlan_AU915::GetRxWindow(uint8_t window, int8_t id) {
         rxw.Frequency = GetSettings()->Network.TxFrequency;
         index = GetSettings()->Session.TxDatarate;
     } else {
-        uint8_t tdr = GetSettings()->Session.TxDatarate;
-        uint8_t offset = GetSettings()->Session.Rx1DatarateOffset;
-        
         switch (window) {
         case RX_1:
             if (_txChannel < _numChans125k) {
@@ -418,30 +415,18 @@ RxWindow ChannelPlan_AU915::GetRxWindow(uint8_t window, int8_t id) {
             } else
                 rxw.Frequency = _freqDBase500k + (_txChannel - _numChans125k) * _freqDStep500k;
 
-                if (tdr <= DR_6) {
-                    index = tdr + 8 - offset;
+            if (GetSettings()->Session.TxDatarate <= DR_6) {
+                index = GetSettings()->Session.TxDatarate + 8 - GetSettings()->Session.Rx1DatarateOffset;
 
-                    if (index < DR_8)
-                        index = DR_8;
-                    if (index > DR_13)
-                        index = DR_13;
-                } else if (tdr <= DR_10) {
-                    if (tdr == DR_10) {
-                        if (offset == 0) {
-                            index = DR_0;
-                        } else {
-                            index = 15 - offset;
-                        }
-                    } else if (tdr == DR_9) {
-                        index = DR_14 - offset;
-                    }
-                    // DR_7 and DR_8 are LR-FHSS and not supported
-                } else if (tdr > DR_10) {
-                    // This case should not happen, P2P does not open RX1
-                    index = tdr - offset;
-                    if (index < DR_8)
-                        index = DR_8;
-                }
+                if (index < DR_8)
+                    index = DR_8;
+                if (index > DR_13)
+                    index = DR_13;
+            } else if (GetSettings()->Session.TxDatarate >= DR_8) {
+                index = GetSettings()->Session.TxDatarate - GetSettings()->Session.Rx1DatarateOffset;
+                if (index < DR_8)
+                    index = DR_8;
+            }
 
             break;
 
@@ -510,7 +495,7 @@ uint8_t ChannelPlan_AU915::HandleRxParamSetup(const uint8_t* payload, uint8_t in
         status &= 0xFE; // Channel frequency KO
     }
 
-    if (datarate != 0 && (datarate < _minRx2Datarate || datarate > _maxRx2Datarate)) {
+    if (datarate < _minRx2Datarate || datarate > _maxRx2Datarate) {
         logInfo("DR KO");
         status &= 0xFD; // Datarate KO
     }
@@ -569,7 +554,7 @@ uint8_t ChannelPlan_AU915::HandlePingSlotChannelReq(const uint8_t* payload, uint
         status &= 0xFE; // Channel frequency KO
     }
 
-    if (datarate != 0 && (datarate < _minRx2Datarate || datarate > _maxRx2Datarate)) {
+    if (datarate < _minRx2Datarate || datarate > _maxRx2Datarate) {
         logInfo("DR KO");
         status &= 0xFD; // Datarate KO
     }

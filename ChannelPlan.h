@@ -200,24 +200,10 @@ namespace lora {
             virtual uint8_t AddDatarate(int8_t index, Datarate datarate);
 
             /**
-             * Add a downlink datarate to the ChannelPlan
-             * @param index of datarate, use -1 to add to end
-             * @param datarate settings to add
-             */
-            virtual uint8_t AddDlDatarate(int8_t index, Datarate datarate);
-
-            /**
              * Get datarate at index
              * @return Datarate
              */
             virtual Datarate GetDatarate(int8_t index);
-
-            /**
-             * Get downlink datarate at index
-             * @return Datarate
-             */
-            virtual Datarate GetDlDatarate(int8_t index);
-
 
             /**
              * Get max payload size for current datarate
@@ -435,8 +421,6 @@ namespace lora {
              * @return status to be returned in MoteCommand answer
              */
             virtual uint8_t ValidateAdrConfiguration() = 0;
-
-            static bool IsInRange(uint8_t dr, DatarateRange &range);
 
             /**
              * Check that Rf Frequency is within channel plan range
@@ -695,7 +679,6 @@ namespace lora {
             uint8_t _txFrequencySubBand;        //!< Current frequency sub band for hybrid operation
 
             std::vector<Datarate> _datarates;   //!< List of datarates
-            std::vector<Datarate> _dlDatarates;   //!< List of datarates
 
             std::vector<Channel> _channels;     //!< List of channels for transmit
             std::vector<Channel> _dlChannels;   //!< List of channels for receive if changed from default
@@ -748,8 +731,6 @@ namespace lora {
             static const uint8_t RADIO_POWERS[];                    //!< List of available tx powers
             static const uint8_t* MAX_PAYLOAD_SIZE;             //!< List of max payload sizes for each datarate
             static const uint8_t* MAX_PAYLOAD_SIZE_REPEATER;    //!< List of repeater compatible max payload sizes for each datarate
-            static const uint8_t* MAX_DOWNLINK_PAYLOAD_SIZE;             //!< List of max payload sizes for each datarate
-            static const uint8_t* MAX_DOWNLINK_PAYLOAD_SIZE_REPEATER;    //!< List of repeater compatible max payload sizes for each datarate
 
             uint8_t _beaconSize;
 
